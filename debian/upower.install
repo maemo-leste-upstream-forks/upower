@@ -1,6 +1,5 @@
 #!/usr/bin/dh-exec
 etc/UPower/UPower.conf
-lib/systemd/
 [linux-any] lib/udev/rules.d/
 usr/bin/upower
 usr/lib/upower/upowerd
