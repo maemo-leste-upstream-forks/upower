@@ -3,7 +3,7 @@ etc/UPower/UPower.conf
 etc/dbus-1/system.d/
 [linux-any] lib/udev/rules.d/
 usr/bin/upower
-usr/lib/upower/upowerd
+usr/lib/*/upowerd
 usr/share/dbus-1/
 usr/share/locale/
 usr/share/man/
