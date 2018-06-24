@@ -1,2 +1,2 @@
 version=3
-https://upower.freedesktop.org/releases/upower-([0-9.]+)\.tar\.xz
+https://gitlab.freedesktop.org/upower/upower/tags .*/upower-([0-9.]+)\.tar\.xz
