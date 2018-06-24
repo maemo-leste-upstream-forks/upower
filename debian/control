@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
 Uploaders: Michael Biebl <biebl@debian.org>,
            Martin Pitt <mpitt@debian.org>,
-Build-Depends: debhelper (>= 10),
+Build-Depends: debhelper (>= 10.3),
                dh-exec,
                gobject-introspection (>= 0.9.12-4~),
                gtk-doc-tools,
