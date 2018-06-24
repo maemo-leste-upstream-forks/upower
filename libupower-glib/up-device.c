@@ -103,6 +103,13 @@ G_DEFINE_TYPE (UpDevice, up_device, G_TYPE_OBJECT)
 static void
 up_device_changed_cb (UpExportedDevice *proxy, GParamSpec *pspec, UpDevice *device)
 {
+	/* Proxy the notification from the D-Bus glue object
+	 * to the real one, but only if the property exists
+	 * for UpClient */
+	if (!g_object_class_find_property (G_OBJECT_GET_CLASS (device), pspec->name) &&
+	    !g_str_equal (pspec->name, "type"))
+		return;
+
 	if (g_strcmp0 (pspec->name, "type") == 0)
 		g_object_notify (G_OBJECT (device), "kind");
 	else
@@ -263,6 +270,7 @@ up_device_to_text (UpDevice *device)
 	const gchar *serial;
 	UpDeviceKind kind;
 	gboolean is_display;
+	UpDeviceLevel battery_level;
 
 	g_return_val_if_fail (UP_IS_DEVICE (device), NULL);
 	g_return_val_if_fail (device->priv->proxy_device != NULL, NULL);
@@ -317,8 +325,9 @@ up_device_to_text (UpDevice *device)
 	    kind == UP_DEVICE_KIND_UPS)
 		g_string_append_printf (string, "    state:               %s\n", up_device_state_to_string (up_exported_device_get_state (priv->proxy_device)));
 	g_string_append_printf (string, "    warning-level:       %s\n", up_device_level_to_string (up_exported_device_get_warning_level (priv->proxy_device)));
-	if (up_exported_device_get_battery_level (priv->proxy_device) != UP_DEVICE_LEVEL_NONE)
-		g_string_append_printf (string, "    battery-level:       %s\n", up_device_level_to_string (up_exported_device_get_battery_level (priv->proxy_device)));
+	battery_level = up_exported_device_get_battery_level (priv->proxy_device);
+	if (battery_level != UP_DEVICE_LEVEL_NONE)
+		g_string_append_printf (string, "    battery-level:       %s\n", up_device_level_to_string (battery_level));
 	if (kind == UP_DEVICE_KIND_BATTERY) {
 		g_string_append_printf (string, "    energy:              %g Wh\n", up_exported_device_get_energy (priv->proxy_device));
 		if (!is_display)
@@ -361,8 +370,12 @@ up_device_to_text (UpDevice *device)
 	    kind == UP_DEVICE_KIND_COMPUTER ||
 	    kind == UP_DEVICE_KIND_MEDIA_PLAYER ||
 	    kind == UP_DEVICE_KIND_UPS ||
-	    kind == UP_DEVICE_KIND_GAMING_INPUT)
-		g_string_append_printf (string, "    percentage:          %g%%\n", up_exported_device_get_percentage (priv->proxy_device));
+	    kind == UP_DEVICE_KIND_GAMING_INPUT) {
+		if (battery_level == UP_DEVICE_LEVEL_NONE)
+			g_string_append_printf (string, "    percentage:          %g%%\n", up_exported_device_get_percentage (priv->proxy_device));
+		else
+			g_string_append_printf (string, "    percentage:          %g%% (should be ignored)\n", up_exported_device_get_percentage (priv->proxy_device));
+	}
 	if (kind == UP_DEVICE_KIND_BATTERY) {
 		if (up_exported_device_get_temperature (priv->proxy_device) > 0)
 			g_string_append_printf (string, "    temperature:         %g degrees C\n", up_exported_device_get_temperature (priv->proxy_device));
@@ -488,8 +501,7 @@ up_device_get_history_sync (UpDevice *device, const gchar *type, guint timespec,
 	g_variant_iter_free (iter);
 
 out:
-	if (gva != NULL)
-		g_variant_unref (gva);
+	g_clear_pointer (&gva, g_variant_unref);
 	return array;
 }
 
@@ -564,8 +576,7 @@ up_device_get_statistics_sync (UpDevice *device, const gchar *type, GCancellable
 	g_variant_iter_free (iter);
 
 out:
-	if (gva != NULL)
-		g_variant_unref (gva);
+	g_clear_pointer (&gva, g_variant_unref);
 	return array;
 }
 
@@ -1123,7 +1134,9 @@ up_device_class_init (UpDeviceClass *klass)
 	/**
 	 * UpDevice:percentage:
 	 *
-	 * The percentage charge of the device.
+	 * The percentage charge of the device. Note that if the battery level property
+	 * is something other than %UP_DEVICE_LEVEL_NONE, then this percentage is an
+	 * approximation, and should not be used a number to display to the user.
 	 *
 	 * Since: 0.9.0
 	 **/
@@ -1163,7 +1176,9 @@ up_device_class_init (UpDeviceClass *klass)
 	/**
 	 * UpDevice:battery-level:
 	 *
-	 * The battery level, e.g. %UP_DEVICE_LEVEL_CRITICAL.
+	 * The battery level, e.g. %UP_DEVICE_LEVEL_CRITICAL. If this is something
+	 * other than %UP_DEVICE_LEVEL_NONE, then User Interfaces should use this
+	 * approximate level instead of percentages.
 	 *
 	 * Since: 1.0
 	 **/
@@ -1224,9 +1239,7 @@ up_device_finalize (GObject *object)
 
 	device = UP_DEVICE (object);
 
-	if (device->priv->proxy_device != NULL)
-		g_object_unref (device->priv->proxy_device);
-
+	g_clear_object (&device->priv->proxy_device);
 	g_clear_pointer (&device->priv->offline_props, g_hash_table_unref);
 
 	G_OBJECT_CLASS (up_device_parent_class)->finalize (object);

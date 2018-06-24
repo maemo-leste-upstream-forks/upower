@@ -13,6 +13,7 @@ _up_client_reserved6
 _up_client_reserved7
 _up_client_reserved8
 up_client_new
+up_client_new_full
 up_client_get_display_device
 up_client_get_critical_action
 up_client_get_devices

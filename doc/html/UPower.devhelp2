@@ -37,6 +37,7 @@
     <keyword type="function" name="_up_client_reserved7 ()" link="UPower-up-client.html#up-client-reserved7"/>
     <keyword type="function" name="_up_client_reserved8 ()" link="UPower-up-client.html#up-client-reserved8"/>
     <keyword type="function" name="up_client_new ()" link="UPower-up-client.html#up-client-new" since="0.9.0"/>
+    <keyword type="function" name="up_client_new_full ()" link="UPower-up-client.html#up-client-new-full" since="0.99.5"/>
     <keyword type="function" name="up_client_get_display_device ()" link="UPower-up-client.html#up-client-get-display-device" since="1.0"/>
     <keyword type="function" name="up_client_get_critical_action ()" link="UPower-up-client.html#up-client-get-critical-action" since="1.0"/>
     <keyword type="function" name="up_client_get_devices ()" link="UPower-up-client.html#up-client-get-devices" since="0.9.0"/>
