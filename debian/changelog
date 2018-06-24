@@ -1,10 +1,12 @@
-upower (0.99.8-1) UNRELEASED; urgency=medium
+upower (0.99.8-1) unstable; urgency=medium
 
   * New upstream version 0.99.8
   * Update debian/watch to pull the tarballs from
     https://gitlab.freedesktop.org
+  * Update symbols file for libupower-glib3
+  * Switch to dh_missing to handle uninstalled files
 
- -- Michael Biebl <biebl@debian.org>  Sun, 24 Jun 2018 22:05:49 +0200
+ -- Michael Biebl <biebl@debian.org>  Sun, 24 Jun 2018 22:45:06 +0200
 
 upower (0.99.7-2) unstable; urgency=medium
 
