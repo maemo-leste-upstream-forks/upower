@@ -1704,7 +1704,7 @@ $(dbusconf_DATA): $(dbusconf_in_files) Makefile
 	cp $< $@
 
 @HAVE_SYSTEMDSYSTEMUNITDIR_TRUE@$(systemdservice_DATA): $(systemdservice_in_files) Makefile
-@HAVE_SYSTEMDSYSTEMUNITDIR_TRUE@	@sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
+@HAVE_SYSTEMDSYSTEMUNITDIR_TRUE@	@sed -e "s|\@libexecdir\@|$(libexecdir)|" -e "s|\@historydir\@|$(historydir)|" $< > $@
 
 install-data-hook:
 	if test -w $(DESTDIR)$(prefix)/; then \

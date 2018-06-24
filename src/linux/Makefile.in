@@ -118,9 +118,9 @@ am__libupshared_la_SOURCES_DIST = up-device-supply.c \
 	up-device-unifying.c up-device-unifying.h up-device-hid.c \
 	up-device-hid.h up-device-wup.c up-device-wup.h \
 	up-device-bluez.c up-device-bluez.h up-input.c up-input.h \
-	up-backend.c up-native.c hidpp-device.c hidpp-device.h \
-	sysfs-utils.c sysfs-utils.h up-device-idevice.c \
-	up-device-idevice.h
+	up-backend.c up-backend-linux-private.h up-native.c \
+	hidpp-device.c hidpp-device.h sysfs-utils.c sysfs-utils.h \
+	up-device-idevice.c up-device-idevice.h
 @HAVE_IDEVICE_TRUE@am__objects_1 =  \
 @HAVE_IDEVICE_TRUE@	libupshared_la-up-device-idevice.lo
 am_libupshared_la_OBJECTS = libupshared_la-up-device-supply.lo \
@@ -441,6 +441,7 @@ libupshared_la_SOURCES = \
 	up-input.c						\
 	up-input.h						\
 	up-backend.c						\
+	up-backend-linux-private.h				\
 	up-native.c						\
 	hidpp-device.c						\
 	hidpp-device.h						\
@@ -875,8 +876,9 @@ ps: ps-am
 ps-am:
 
 uninstall-am:
-
-.MAKE: install-am install-strip
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: install-am install-strip uninstall-am
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
 	clean-libtool clean-local clean-noinstLTLIBRARIES \
@@ -890,13 +892,20 @@ uninstall-am:
 	install-strip installcheck installcheck-am installdirs \
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am
+	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-hook
 
 .PRECIOUS: Makefile
 
 
 clean-local :
 	rm -f *~
+
+uninstall-hook:
+	rm -f $(DESTDIR)$(localstatedir)/lib/upower/history-* && \
+	rmdir $(DESTDIR)$(localstatedir)/lib/upower && \
+	rmdir $(DESTDIR)$(localstatedir)/lib && \
+	rmdir $(DESTDIR)$(localstatedir)
 
 -include $(top_srcdir)/git.mk
 

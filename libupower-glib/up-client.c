@@ -80,14 +80,35 @@ G_DEFINE_TYPE_WITH_CODE (UpClient, up_client, G_TYPE_OBJECT,
  * up_client_get_devices:
  * @client: a #UpClient instance.
  *
- * Get a copy of the device objects.
+ * Get a copy of the device objects. This function does not set the free
+ * function for the #GPtrArray so you need use g_object_unref on all
+ * elements when you are finished with the array.
  *
  * Return value: (element-type UpDevice) (transfer full): an array of #UpDevice objects, free with g_ptr_array_unref()
  *
  * Since: 0.9.0
+ * Deprecated: 0.99.8
  **/
 GPtrArray *
 up_client_get_devices (UpClient *client)
+{
+	GPtrArray *array = up_client_get_devices2 (client);
+	g_ptr_array_set_free_func (array, NULL);
+	return array;
+}
+
+/**
+ * up_client_get_devices2:
+ * @client: a #UpClient instance.
+ *
+ * Get a copy of the device objects.
+ *
+ * Return value: (element-type UpDevice) (transfer full): an array of #UpDevice objects, free with g_ptr_array_unref()
+ *
+ * Since: 0.99.8
+ **/
+GPtrArray *
+up_client_get_devices2 (UpClient *client)
 {
 	GError *error = NULL;
 	char **devices;
@@ -105,7 +126,7 @@ up_client_get_devices (UpClient *client)
 		return NULL;
 	}
 
-	array = g_ptr_array_new ();
+	array = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
 
 	for (i = 0; devices[i] != NULL; i++) {
 		UpDevice *device;
@@ -261,8 +282,7 @@ up_client_add (UpClient *client, const gchar *object_path)
 	/* add to array */
 	g_signal_emit (client, signals [UP_CLIENT_DEVICE_ADDED], 0, device);
 out:
-	if (device != NULL)
-		g_object_unref (device);
+	g_clear_object (&device);
 }
 
 /*
@@ -274,7 +294,12 @@ up_client_notify_cb (GObject    *gobject,
 		     UpClient   *client)
 {
 	/* Proxy the notification from the D-Bus glue object
-	 * to the real one */
+	 * to the real one, but only if the property exists
+	 * for UpClient */
+	if (!g_object_class_find_property (G_OBJECT_GET_CLASS (client),
+					  pspec->name))
+		return;
+
 	g_object_notify (G_OBJECT (client), pspec->name);
 }
 
@@ -489,8 +514,7 @@ up_client_finalize (GObject *object)
 
 	client = UP_CLIENT (object);
 
-	if (client->priv->proxy != NULL)
-		g_object_unref (client->priv->proxy);
+	g_clear_object (&client->priv->proxy);
 
 	G_OBJECT_CLASS (up_client_parent_class)->finalize (object);
 }
