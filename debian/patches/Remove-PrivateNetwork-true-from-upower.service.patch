@@ -1,0 +1,28 @@
+From: Michael Biebl <biebl@debian.org>
+Date: Thu, 5 Jul 2018 14:04:22 +0200
+Subject: Remove PrivateNetwork=true from upower.service
+
+upower needs to receive device uevents via AF_NETLINK socket otherwise
+it can't detect plug/unplug events.
+
+See https://gitlab.freedesktop.org/upower/upower/issues/68
+
+Closes: #902644
+---
+ src/upower.service.in | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/src/upower.service.in b/src/upower.service.in
+index 835529a..6e58e33 100644
+--- a/src/upower.service.in
++++ b/src/upower.service.in
+@@ -16,9 +16,6 @@ ReadWritePaths=@historydir@
+ ProtectHome=true
+ PrivateTmp=true
+ 
+-# Network
+-PrivateNetwork=true
+-
+ # Execute Mappings
+ MemoryDenyWriteExecute=true
+ 
