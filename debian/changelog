@@ -1,3 +1,11 @@
+upower (0.99.8-2) unstable; urgency=medium
+
+  * Remove PrivateNetwork=true from upower.service.
+    upower needs to receive device uevents via AF_NETLINK socket otherwise
+    it can't detect plug/unplug events. (Closes: #902644)
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 05 Jul 2018 14:07:56 +0200
+
 upower (0.99.8-1) unstable; urgency=medium
 
   * New upstream version 0.99.8
