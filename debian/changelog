@@ -1,11 +1,11 @@
-upower (0.99.9-1) UNRELEASED; urgency=medium
+upower (0.99.9-1) unstable; urgency=medium
 
   * New upstream version 0.99.9
     - Fix lack of update after AC status changes, and broken keyboard
       backlight, following the daemon lockdown added in 0.99.8.
       (Closes: #903795)
 
- -- Michael Biebl <biebl@debian.org>  Thu, 25 Oct 2018 20:31:41 +0200
+ -- Michael Biebl <biebl@debian.org>  Thu, 25 Oct 2018 20:51:55 +0200
 
 upower (0.99.8-2) unstable; urgency=medium
 
