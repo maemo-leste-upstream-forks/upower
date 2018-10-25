@@ -1,22 +1,19 @@
 <SECTION>
+<FILE>up-autocleanups</FILE>
+
+</SECTION>
+
+<SECTION>
 <FILE>up-client</FILE>
+<TITLE>UpClient</TITLE>
 UP_CLIENT_ERROR
 UP_CLIENT_TYPE_ERROR
-device_added
-device_removed
-_up_client_reserved1
-_up_client_reserved2
-_up_client_reserved3
-_up_client_reserved4
-_up_client_reserved5
-_up_client_reserved6
-_up_client_reserved7
-_up_client_reserved8
 up_client_new
 up_client_new_full
 up_client_get_display_device
 up_client_get_critical_action
 up_client_get_devices
+up_client_get_devices2
 up_client_get_daemon_version
 up_client_get_lid_is_closed
 up_client_get_lid_is_present
@@ -26,24 +23,18 @@ UP_CLIENT
 UP_CLIENT_CLASS
 UP_CLIENT_GET_CLASS
 UP_IS_CLIENT
-UP_IS_CLIENT_CLASS
 UP_TYPE_CLIENT
+UpClient
+UpClientClass
 UpClientPrivate
 up_client_get_type
 </SECTION>
 
 <SECTION>
 <FILE>up-device</FILE>
+<TITLE>UpDevice</TITLE>
 UP_DEVICE_ERROR
 UP_DEVICE_TYPE_ERROR
-_up_device_reserved1
-_up_device_reserved2
-_up_device_reserved3
-_up_device_reserved4
-_up_device_reserved5
-_up_device_reserved6
-_up_device_reserved7
-_up_device_reserved8
 up_device_new
 up_device_to_text
 up_device_refresh_sync
@@ -56,14 +47,16 @@ UP_DEVICE
 UP_DEVICE_CLASS
 UP_DEVICE_GET_CLASS
 UP_IS_DEVICE
-UP_IS_DEVICE_CLASS
 UP_TYPE_DEVICE
+UpDevice
+UpDeviceClass
 UpDevicePrivate
 up_device_get_type
 </SECTION>
 
 <SECTION>
 <FILE>up-history-item</FILE>
+<TITLE>UpHistoryItem</TITLE>
 up_history_item_new
 up_history_item_get_value
 up_history_item_set_value
@@ -79,14 +72,16 @@ UP_HISTORY_ITEM
 UP_HISTORY_ITEM_CLASS
 UP_HISTORY_ITEM_GET_CLASS
 UP_IS_HISTORY_ITEM
-UP_IS_HISTORY_ITEM_CLASS
 UP_TYPE_HISTORY_ITEM
+UpHistoryItem
+UpHistoryItemClass
 UpHistoryItemPrivate
 up_history_item_get_type
 </SECTION>
 
 <SECTION>
 <FILE>up-stats-item</FILE>
+<TITLE>UpStatsItem</TITLE>
 up_stats_item_new
 up_stats_item_get_value
 up_stats_item_set_value
@@ -94,11 +89,12 @@ up_stats_item_get_accuracy
 up_stats_item_set_accuracy
 <SUBSECTION Standard>
 UP_IS_STATS_ITEM
-UP_IS_STATS_ITEM_CLASS
 UP_STATS_ITEM
 UP_STATS_ITEM_CLASS
 UP_STATS_ITEM_GET_CLASS
 UP_TYPE_STATS_ITEM
+UpStatsItem
+UpStatsItemClass
 UpStatsItemPrivate
 up_stats_item_get_type
 </SECTION>
@@ -129,6 +125,7 @@ UP_CHECK_VERSION
 
 <SECTION>
 <FILE>up-wakeup-item</FILE>
+<TITLE>UpWakeupItem</TITLE>
 up_wakeup_item_new
 up_wakeup_item_get_is_userspace
 up_wakeup_item_set_is_userspace
@@ -144,11 +141,12 @@ up_wakeup_item_get_details
 up_wakeup_item_set_details
 <SUBSECTION Standard>
 UP_IS_WAKEUP_ITEM
-UP_IS_WAKEUP_ITEM_CLASS
 UP_TYPE_WAKEUP_ITEM
 UP_WAKEUP_ITEM
 UP_WAKEUP_ITEM_CLASS
 UP_WAKEUP_ITEM_GET_CLASS
+UpWakeupItem
+UpWakeupItemClass
 UpWakeupItemPrivate
 up_wakeup_item_get_type
 </SECTION>
@@ -166,12 +164,16 @@ up_wakeups_get_properties_sync
 up_wakeups_get_has_capability
 <SUBSECTION Standard>
 UP_IS_WAKEUPS
-UP_IS_WAKEUPS_CLASS
 UP_TYPE_WAKEUPS
 UP_WAKEUPS
 UP_WAKEUPS_CLASS
 UP_WAKEUPS_GET_CLASS
 UpWakeupsPrivate
 up_wakeups_get_type
+</SECTION>
+
+<SECTION>
+<FILE>upower</FILE>
+
 </SECTION>
 

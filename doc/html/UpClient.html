@@ -1,0 +1,627 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UpClient: UPower Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="UPower Reference Manual">
+<link rel="up" href="libupower-glib.html" title="libupower-glib GObjects">
+<link rel="prev" href="libupower-glib.html" title="libupower-glib GObjects">
+<link rel="next" href="UpDevice.html" title="UpDevice">
+<meta name="generator" content="GTK-Doc V1.29.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#UpClient.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#UpClient.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#UpClient.properties" class="shortcut">Properties</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#UpClient.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="libupower-glib.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="libupower-glib.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="UpDevice.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="UpClient"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="UpClient.top_of_page"></a>UpClient</span></h2>
+<p>UpClient — Main client object for accessing the UPower daemon</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="UpClient.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="UpClient.html" title="UpClient"><span class="returnvalue">UpClient</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-new" title="up_client_new ()">up_client_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="UpClient.html" title="UpClient"><span class="returnvalue">UpClient</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-new-full" title="up_client_new_full ()">up_client_new_full</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="UpDevice.html" title="UpDevice"><span class="returnvalue">UpDevice</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-display-device" title="up_client_get_display_device ()">up_client_get_display_device</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-critical-action" title="up_client_get_critical_action ()">up_client_get_critical_action</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-devices" title="up_client_get_devices ()">up_client_get_devices</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-devices2" title="up_client_get_devices2 ()">up_client_get_devices2</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-daemon-version" title="up_client_get_daemon_version ()">up_client_get_daemon_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-lid-is-closed" title="up_client_get_lid_is_closed ()">up_client_get_lid_is_closed</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-lid-is-present" title="up_client_get_lid_is_present ()">up_client_get_lid_is_present</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="UpClient.html#up-client-get-on-battery" title="up_client_get_on_battery ()">up_client_get_on_battery</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="UpClient.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<td class="property_name"><a class="link" href="UpClient.html#UpClient--daemon-version" title="The “daemon-version” property">daemon-version</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="UpClient.html#UpClient--lid-is-closed" title="The “lid-is-closed” property">lid-is-closed</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="UpClient.html#UpClient--lid-is-present" title="The “lid-is-present” property">lid-is-present</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="UpClient.html#UpClient--on-battery" title="The “on-battery” property">on-battery</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="UpClient.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signals_return">
+<col width="300px" class="signals_name">
+<col width="200px" class="signals_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="UpClient.html#UpClient-device-added" title="The “device-added” signal">device-added</a></td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="UpClient.html#UpClient-device-removed" title="The “device-removed” signal">device-removed</a></td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="UpClient.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="UpClient.html#UP-CLIENT-ERROR:CAPS" title="UP_CLIENT_ERROR">UP_CLIENT_ERROR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="UpClient.html#UP-CLIENT-TYPE-ERROR:CAPS" title="UP_CLIENT_TYPE_ERROR">UP_CLIENT_TYPE_ERROR</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="UpClient.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> UpClient
+</pre>
+</div>
+<div class="refsect1">
+<a name="UpClient.description"></a><h2>Description</h2>
+<p>A helper GObject to use for accessing UPower information, and to be notified
+when it is changed.</p>
+</div>
+<div class="refsect1">
+<a name="UpClient.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="up-client-new"></a><h3>up_client_new ()</h3>
+<pre class="programlisting"><a class="link" href="UpClient.html" title="UpClient"><span class="returnvalue">UpClient</span></a> *
+up_client_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> object. If connecting to upowerd on D-Bus fails,
+this returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> and prints out a warning with the error message.
+Consider using <a class="link" href="UpClient.html#up-client-new-full" title="up_client_new_full ()"><code class="function">up_client_new_full()</code></a> instead which allows you to handle errors
+and cancelling long operations yourself.</p>
+<div class="refsect3">
+<a name="up-client-new.returns"></a><h4>Returns</h4>
+<p> a new UpClient object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on failure.</p>
+</div>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-new-full"></a><h3>up_client_new_full ()</h3>
+<pre class="programlisting"><a class="link" href="UpClient.html" title="UpClient"><span class="returnvalue">UpClient</span></a> *
+up_client_new_full (<em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                    <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Creates a new <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> object. If connecting to upowerd on D-Bus fails,
+this returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> and sets <em class="parameter"><code>error</code></em>
+.</p>
+<div class="refsect3">
+<a name="up-client-new-full.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>Return location for error or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-new-full.returns"></a><h4>Returns</h4>
+<p> a new UpClient object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on failure.</p>
+</div>
+<p class="since">Since: 0.99.5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-display-device"></a><h3>up_client_get_display_device ()</h3>
+<pre class="programlisting"><a class="link" href="UpDevice.html" title="UpDevice"><span class="returnvalue">UpDevice</span></a> *
+up_client_get_display_device (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get the composite display device.</p>
+<div class="refsect3">
+<a name="up-client-get-display-device.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-display-device.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on error. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-critical-action"></a><h3>up_client_get_critical_action ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+up_client_get_critical_action (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Gets a string representing the configured critical action,
+depending on availability.</p>
+<div class="refsect3">
+<a name="up-client-get-critical-action.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-critical-action.returns"></a><h4>Returns</h4>
+<p> the action name, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on error.</p>
+</div>
+<p class="since">Since: 1.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-devices"></a><h3>up_client_get_devices ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+up_client_get_devices (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<div class="warning"><p><code class="literal">up_client_get_devices</code> has been deprecated since version 0.99.8 and should not be used in newly-written code.</p></div>
+<p>Get a copy of the device objects. This function does not set the free
+function for the <a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> so you need use g_object_unref on all
+elements when you are finished with the array.</p>
+<div class="refsect3">
+<a name="up-client-get-devices.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-devices.returns"></a><h4>Returns</h4>
+<p>an array of <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> objects, free with <a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#g-ptr-array-unref"><code class="function">g_ptr_array_unref()</code></a>. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> UpDevice][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-devices2"></a><h3>up_client_get_devices2 ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"><span class="returnvalue">GPtrArray</span></a> *
+up_client_get_devices2 (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get a copy of the device objects.</p>
+<div class="refsect3">
+<a name="up-client-get-devices2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-devices2.returns"></a><h4>Returns</h4>
+<p>an array of <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> objects, free with <a href="https://developer.gnome.org/glib/unstable/glib-Pointer-Arrays.html#g-ptr-array-unref"><code class="function">g_ptr_array_unref()</code></a>. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> UpDevice][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: 0.99.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-daemon-version"></a><h3>up_client_get_daemon_version ()</h3>
+<pre class="programlisting">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+up_client_get_daemon_version (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get UPower daemon version.</p>
+<div class="refsect3">
+<a name="up-client-get-daemon-version.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-daemon-version.returns"></a><h4>Returns</h4>
+<p> string containing the daemon version, e.g. 008</p>
+</div>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-lid-is-closed"></a><h3>up_client_get_lid_is_closed ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+up_client_get_lid_is_closed (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get whether the laptop lid is closed.</p>
+<div class="refsect3">
+<a name="up-client-get-lid-is-closed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-lid-is-closed.returns"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if lid is closed or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-lid-is-present"></a><h3>up_client_get_lid_is_present ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+up_client_get_lid_is_present (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get whether a laptop lid is present on this machine.</p>
+<div class="refsect3">
+<a name="up-client-get-lid-is-present.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-lid-is-present.returns"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the machine has a laptop lid</p>
+</div>
+<p class="since">Since: 0.9.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="up-client-get-on-battery"></a><h3>up_client_get_on_battery ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+up_client_get_on_battery (<em class="parameter"><code><a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client</code></em>);</pre>
+<p>Get whether the system is running on battery power.</p>
+<div class="refsect3">
+<a name="up-client-get-on-battery.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>a <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="up-client-get-on-battery.returns"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the system is currently running on battery, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: 0.9.0</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="UpClient.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="UP-CLIENT-ERROR:CAPS"></a><h3>UP_CLIENT_ERROR</h3>
+<pre class="programlisting">#define UP_CLIENT_ERROR			(up_client_error_quark ())
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UP-CLIENT-TYPE-ERROR:CAPS"></a><h3>UP_CLIENT_TYPE_ERROR</h3>
+<pre class="programlisting">#define UP_CLIENT_TYPE_ERROR		(up_client_error_get_type ())
+</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="UpClient.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="UpClient--daemon-version"></a><h3>The <code class="literal">“daemon-version”</code> property</h3>
+<pre class="programlisting">  “daemon-version”           <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<p>The daemon version.</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UpClient--lid-is-closed"></a><h3>The <code class="literal">“lid-is-closed”</code> property</h3>
+<pre class="programlisting">  “lid-is-closed”            <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>If the laptop lid is closed.</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UpClient--lid-is-present"></a><h3>The <code class="literal">“lid-is-present”</code> property</h3>
+<pre class="programlisting">  “lid-is-present”           <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>If a laptop lid is present.</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UpClient--on-battery"></a><h3>The <code class="literal">“on-battery”</code> property</h3>
+<pre class="programlisting">  “on-battery”               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>If the computer is on battery power.</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+<p class="since">Since: 0.9.0</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="UpClient.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="UpClient-device-added"></a><h3>The <code class="literal">“device-added”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client,
+               <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> *device,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)</pre>
+<p>The ::device-added signal is emitted when a power device is added.</p>
+<div class="refsect3">
+<a name="UpClient-device-added.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>the <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance that emitted the signal</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>device</p></td>
+<td class="parameter_description"><p>the <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> that was added.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: 0.9.0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UpClient-device-removed"></a><h3>The <code class="literal">“device-removed”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> *client,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>    *object_path,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)</pre>
+<p>The ::device-removed signal is emitted when a power device is removed.</p>
+<div class="refsect3">
+<a name="UpClient-device-removed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>client</p></td>
+<td class="parameter_description"><p>the <a class="link" href="UpClient.html" title="UpClient"><span class="type">UpClient</span></a> instance that emitted the signal</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_path</p></td>
+<td class="parameter_description"><p>the object path of the <a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a> that was removed.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: 1.0</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="UpClient.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="UpDevice.html" title="UpDevice"><span class="type">UpDevice</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.29.1</div>
+</body>
+</html>

@@ -22,11 +22,10 @@
 /**
  * SECTION:up-client
  * @short_description: Main client object for accessing the UPower daemon
+ * @see_also: #UpDevice
  *
  * A helper GObject to use for accessing UPower information, and to be notified
  * when it is changed.
- *
- * See also: #UpDevice
  */
 
 #include "config.h"
@@ -152,7 +151,7 @@ up_client_get_devices2 (UpClient *client)
  * @client: a #UpClient instance.
  *
  * Get the composite display device.
- * Return value: (transfer full): a #UpClient object, or %NULL on error.
+ * Return value: (transfer full): a #UpDevice object, or %NULL on error.
  *
  * Since: 1.0
  **/
@@ -525,7 +524,7 @@ up_client_finalize (GObject *object)
  * @error: Return location for error or %NULL.
  *
  * Creates a new #UpClient object. If connecting to upowerd on D-Bus fails,
- % this returns %NULL and sets @error.
+ * this returns %NULL and sets @error.
  *
  * Return value: a new UpClient object, or %NULL on failure.
  *

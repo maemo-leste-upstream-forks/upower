@@ -22,11 +22,10 @@
 /**
  * SECTION:up-version
  * @short_description: Obtains the version for the installed UPower
+ * @see_also: #UpClient, #UpDevice
  *
  * These compile time macros allow the user to enable parts of client code
  * depending on the version of libupower-glib installed.
- *
- * See also: #UpClient, #UpDevice
  */
 
 #if !defined (__UPOWER_H_INSIDE__) && !defined (UP_COMPILATION)
@@ -55,7 +54,7 @@
  *
  * The compile-time micro version
  */
-#define UP_MICRO_VERSION				(8)
+#define UP_MICRO_VERSION				(9)
 
 /* check whether a UPower version equal to or greater than
  * major.minor.micro.
