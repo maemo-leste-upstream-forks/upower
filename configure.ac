@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 m4_define([up_major_version], [0])
 m4_define([up_minor_version], [99])
-m4_define([up_micro_version], [8])
+m4_define([up_micro_version], [9])
 m4_define([up_version],
           [up_major_version.up_minor_version.up_micro_version])
 
@@ -253,7 +253,6 @@ tools/Makefile
 doc/Makefile
 doc/version.xml
 doc/man/Makefile
-doc/dbus/Makefile
 rules/Makefile
 libupower-glib/Makefile
 libupower-glib/up-version.h
