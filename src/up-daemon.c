@@ -43,6 +43,7 @@ struct UpDaemonPrivate
 	UpBackend		*backend;
 	UpDeviceList		*power_devices;
 	guint			 action_timeout_id;
+	guint			 refresh_event_id;
 	GHashTable		*poll_timeouts;
 	gboolean                 poll_paused;
 	GHashTable		*idle_signals;
@@ -354,10 +355,10 @@ up_daemon_get_on_ac_local (UpDaemon *daemon)
 }
 
 /**
- * up_daemon_refresh_battery_devices:
+ * up_daemon_refresh_battery_devices_cb:
  **/
 static gboolean
-up_daemon_refresh_battery_devices (UpDaemon *daemon)
+up_daemon_refresh_battery_devices_cb (UpDaemon *daemon)
 {
 	guint i;
 	GPtrArray *array;
@@ -381,7 +382,24 @@ up_daemon_refresh_battery_devices (UpDaemon *daemon)
 	}
 	g_ptr_array_unref (array);
 
-	return TRUE;
+	daemon->priv->refresh_event_id = 0;
+	return G_SOURCE_REMOVE;
+}
+
+/**
+ * up_daemon_refresh_battery_devices:
+ **/
+static void
+up_daemon_refresh_battery_devices (UpDaemon *daemon)
+{
+	GSourceFunc src_func;
+
+	if (daemon->priv->refresh_event_id)
+		return;
+
+	src_func = (GSourceFunc) up_daemon_refresh_battery_devices_cb;
+
+	daemon->priv->refresh_event_id = g_idle_add (src_func, daemon);
 }
 
 /**
@@ -1152,6 +1170,9 @@ up_daemon_finalize (GObject *object)
 
 	if (priv->action_timeout_id != 0)
 		g_source_remove (priv->action_timeout_id);
+
+	if (priv->refresh_event_id != 0)
+		g_source_remove (priv->refresh_event_id);
 
 	g_clear_pointer (&priv->poll_timeouts, g_hash_table_destroy);
 	g_clear_pointer (&priv->idle_signals, g_hash_table_destroy);
