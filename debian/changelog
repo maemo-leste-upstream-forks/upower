@@ -1,4 +1,4 @@
-upower (1:0.99.7.1-2) unstable; urgency=medium
+upower (1:0.99.7.2-2) unstable; urgency=medium
 
   * Update epoch to override Devuan upgrades over Maemo Leste
 
