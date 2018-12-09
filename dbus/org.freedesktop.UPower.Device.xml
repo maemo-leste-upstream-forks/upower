@@ -70,6 +70,18 @@ method return sender=:1.386 -> dest=:1.477 reply_serial=2
          variant             boolean false
       )
       dict entry(
+         string "charge"
+         variant             double 4.415
+      )
+      dict entry(
+         string "charge-full"
+         variant             double 4.541
+      )
+      dict entry(
+         string "charge-full-design"
+         variant             double 4.561
+      )
+      dict entry(
          string "energy"
          variant             double 72.85
       )
@@ -380,6 +392,51 @@ method return sender=:1.386 -> dest=:1.477 reply_serial=2
             This property is only valid if the property
             <doc:ref type="property" to="Source:Type">type</doc:ref>
             has the value "line-power".
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+
+    <property name="Charge" type="d" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Amount of charge (measured in Ah) currently available in
+            the power source.
+          </doc:para><doc:para>
+            This property is only valid if the property
+            <doc:ref type="property" to="Source:Type">type</doc:ref>
+            has the value "battery".
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+
+    <property name="ChargeFull" type="d" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Amount of charge (measured in Ah) in the power source when
+            it's considered full.
+          </doc:para><doc:para>
+            This property is only valid if the property
+            <doc:ref type="property" to="Source:Type">type</doc:ref>
+            has the value "battery".
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+
+    <property name="ChargeFullDesign" type="d" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Amount of charge (measured in Ah) the power source is
+            designed to hold when it's considered full.
+          </doc:para><doc:para>
+            This property is only valid if the property
+            <doc:ref type="property" to="Source:Type">type</doc:ref>
+            has the value "battery".
           </doc:para>
         </doc:description>
       </doc:doc>
