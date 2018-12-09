@@ -1,3 +1,9 @@
+upower (1:0.99.7.4-1) unstable; urgency=medium
+
+  * Use firmware provided time calculations
+
+ -- Arthur D. <spinal.by@gmail.com>  Sun, 09 Dec 2018 10:15:40 +0300
+
 upower (1:0.99.7.3-1) unstable; urgency=medium
 
   * Fix wrong if statement in my previous commit
