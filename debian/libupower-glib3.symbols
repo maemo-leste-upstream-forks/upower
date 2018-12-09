@@ -79,6 +79,9 @@ libupower-glib.so.3 libupower-glib3 #MINVER#
  (optional)up_exported_device_dup_vendor@Base 0.99.4
  (optional)up_exported_device_get_battery_level@Base 0.99.5
  (optional)up_exported_device_get_capacity@Base 0.99.4
+ (optional)up_exported_device_get_charge@Base 1:0.99.7.4-2
+ (optional)up_exported_device_get_charge_full@Base 1:0.99.7.4-2
+ (optional)up_exported_device_get_charge_full_design@Base 1:0.99.7.4-2
  (optional)up_exported_device_get_energy@Base 0.99.4
  (optional)up_exported_device_get_energy_empty@Base 0.99.4
  (optional)up_exported_device_get_energy_full@Base 0.99.4
@@ -118,6 +121,9 @@ libupower-glib.so.3 libupower-glib3 #MINVER#
  (optional)up_exported_device_proxy_new_sync@Base 0.99.4
  (optional)up_exported_device_set_battery_level@Base 0.99.5
  (optional)up_exported_device_set_capacity@Base 0.99.4
+ (optional)up_exported_device_set_charge@Base 1:0.99.7.4-2
+ (optional)up_exported_device_set_charge_full@Base 1:0.99.7.4-2
+ (optional)up_exported_device_set_charge_full_design@Base 1:0.99.7.4-2
  (optional)up_exported_device_set_energy@Base 0.99.4
  (optional)up_exported_device_set_energy_empty@Base 0.99.4
  (optional)up_exported_device_set_energy_full@Base 0.99.4
