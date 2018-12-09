@@ -724,15 +724,15 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy_rate = up_device_supply_calculate_rate (supply, energy);
 
 	/* get a precise percentage */
-        if (sysfs_file_exists (native_path, "capacity")) {
+	if (sysfs_file_exists (native_path, "capacity")) {
 		percentage = sysfs_get_double (native_path, "capacity");
 		percentage = CLAMP(percentage, 0.0f, 100.0f);
-                /* for devices which provide capacity, but not {energy,charge}_now */
-                if (energy < 0.1f && energy_full > 0.0f)
-                    energy = energy_full * percentage / 100;
-		} else if (sysfs_file_exists(native_path, "capacity_level")) {
+		/* for devices which provide capacity, but not {energy,charge}_now */
+		if (energy < 0.1f && energy_full > 0.0f)
+			energy = energy_full * percentage / 100;
+		else if (sysfs_file_exists(native_path, "capacity_level"))
 			percentage = sysfs_get_capacity_level (native_path, &level);
-        } else if (energy_full > 0.0f) {
+	} else if (energy_full > 0.0f) {
 		percentage = 100.0 * energy / energy_full;
 		percentage = CLAMP(percentage, 0.0f, 100.0f);
 	}
