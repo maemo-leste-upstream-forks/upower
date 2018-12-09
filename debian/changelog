@@ -1,3 +1,9 @@
+upower (1:0.99.7.4-2) unstable; urgency=medium
+
+  * Add charge properties for battery devices
+
+ -- Arthur D. <spinal.by@gmail.com>  Sun, 09 Dec 2018 14:56:28 +0300
+
 upower (1:0.99.7.4-1) unstable; urgency=medium
 
   * Use firmware provided time calculations
