@@ -806,10 +806,19 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	time_to_full = 0;
 	if (energy_rate > 0) {
 		if (state == UP_DEVICE_STATE_DISCHARGING)
-			time_to_empty = 3600 * (energy / energy_rate);
+		{
+			if (sysfs_file_exists (native_path, "time_to_empty_now"))
+				time_to_empty = sysfs_get_int (native_path, "time_to_empty_now");
+			else
+				time_to_empty = 3600 * (energy / energy_rate);
+		}
 		else if (state == UP_DEVICE_STATE_CHARGING)
-			time_to_full = 3600 * ((energy_full - energy) / energy_rate);
-		/* TODO: need to factor in battery charge metrics */
+		{
+			if (sysfs_file_exists (native_path, "time_to_full_now"))
+				time_to_full = sysfs_get_int (native_path, "time_to_full_now");
+			else
+				time_to_full = 3600 * ((energy_full - energy) / energy_rate);
+		}
 	}
 
 	/* check the remaining time is under a set limit, to deal with broken
