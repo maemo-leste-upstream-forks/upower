@@ -75,6 +75,9 @@ enum {
 	PROP_STATE,
 	PROP_TECHNOLOGY,
 	PROP_CAPACITY,
+	PROP_CHARGE,
+	PROP_CHARGE_FULL,
+	PROP_CHARGE_FULL_DESIGN,
 	PROP_ENERGY,
 	PROP_ENERGY_EMPTY,
 	PROP_ENERGY_FULL,
@@ -326,6 +329,11 @@ up_device_to_text (UpDevice *device)
 	if (battery_level != UP_DEVICE_LEVEL_NONE)
 		g_string_append_printf (string, "    battery-level:       %s\n", up_device_level_to_string (battery_level));
 	if (kind == UP_DEVICE_KIND_BATTERY) {
+		if (!is_display) {
+			g_string_append_printf (string, "    charge:              %g Ah\n", up_exported_device_get_charge (priv->proxy_device));
+			g_string_append_printf (string, "    charge-full:         %g Ah\n", up_exported_device_get_charge_full (priv->proxy_device));
+			g_string_append_printf (string, "    charge-full-design:  %g Ah\n", up_exported_device_get_charge_full_design (priv->proxy_device));
+		}
 		g_string_append_printf (string, "    energy:              %g Wh\n", up_exported_device_get_energy (priv->proxy_device));
 		if (!is_display)
 			g_string_append_printf (string, "    energy-empty:        %g Wh\n", up_exported_device_get_energy_empty (priv->proxy_device));
@@ -639,6 +647,15 @@ up_device_set_property (GObject *object, guint prop_id, const GValue *value, GPa
 	case PROP_CAPACITY:
 		up_exported_device_set_capacity (device->priv->proxy_device, g_value_get_double (value));
 		break;
+	case PROP_CHARGE:
+		up_exported_device_set_charge (device->priv->proxy_device, g_value_get_double (value));
+		break;
+	case PROP_CHARGE_FULL:
+		up_exported_device_set_charge_full (device->priv->proxy_device, g_value_get_double (value));
+		break;
+	case PROP_CHARGE_FULL_DESIGN:
+		up_exported_device_set_charge_full_design (device->priv->proxy_device, g_value_get_double (value));
+		break;
 	case PROP_ENERGY:
 		up_exported_device_set_energy (device->priv->proxy_device, g_value_get_double (value));
 		break;
@@ -755,6 +772,15 @@ up_device_get_property (GObject *object, guint prop_id, GValue *value, GParamSpe
 		break;
 	case PROP_CAPACITY:
 		g_value_set_double (value, up_exported_device_get_capacity (device->priv->proxy_device));
+		break;
+	case PROP_CHARGE:
+		g_value_set_double (value, up_exported_device_get_charge (device->priv->proxy_device));
+		break;
+	case PROP_CHARGE_FULL:
+		g_value_set_double (value, up_exported_device_get_charge_full (device->priv->proxy_device));
+		break;
+	case PROP_CHARGE_FULL_DESIGN:
+		g_value_set_double (value, up_exported_device_get_charge_full_design (device->priv->proxy_device));
 		break;
 	case PROP_ENERGY:
 		g_value_set_double (value, up_exported_device_get_energy (device->priv->proxy_device));
@@ -1017,6 +1043,42 @@ up_device_class_init (UpDeviceClass *klass)
 					 PROP_CAPACITY,
 					 g_param_spec_double ("capacity", NULL, NULL,
 							      0.0, 100.f, 100.0,
+							      G_PARAM_READWRITE));
+	/**
+	 * UpDevice:charge:
+	 *
+	 * The charge left in the device. Measured in Ah.
+	 *
+	 * Since: 1:0.99.7.3-2
+	 **/
+	g_object_class_install_property (object_class,
+					 PROP_CHARGE,
+					 g_param_spec_double ("charge", NULL, NULL,
+							      0.0, G_MAXDOUBLE, 0.0,
+							      G_PARAM_READWRITE));
+	/**
+	 * UpDevice:charge-full:
+	 *
+	 * The amount of charge when the device is fully charged. Measured in Ah.
+	 *
+	 * Since: 1:0.99.7.3-2
+	 **/
+	g_object_class_install_property (object_class,
+					 PROP_CHARGE_FULL,
+					 g_param_spec_double ("charge-full", NULL, NULL,
+							      0.0, G_MAXDOUBLE, 0.0,
+							      G_PARAM_READWRITE));
+	/**
+	 * UpDevice:charge-full-design:
+	 *
+	 * The amount of charge when the device was brand new. Measured in Ah.
+	 *
+	 * Since: 1:0.99.7.3-2
+	 **/
+	g_object_class_install_property (object_class,
+					 PROP_CHARGE_FULL_DESIGN,
+					 g_param_spec_double ("charge-full-design", NULL, NULL,
+							      0.0, G_MAXDOUBLE, 0.0,
 							      G_PARAM_READWRITE));
 	/**
 	 * UpDevice:energy:

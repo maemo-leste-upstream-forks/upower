@@ -132,6 +132,9 @@ up_device_supply_reset_values (UpDeviceSupply *supply)
 		      "has-statistics", FALSE,
 		      "state", UP_DEVICE_STATE_UNKNOWN,
 		      "capacity", (gdouble) 0.0,
+		      "charge", (gdouble) 0.0,
+		      "charge-full", (gdouble) 0.0,
+		      "charge-full-design", (gdouble) 0.0,
 		      "energy-empty", (gdouble) 0.0,
 		      "energy-full", (gdouble) 0.0,
 		      "energy-full-design", (gdouble) 0.0,
@@ -547,6 +550,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	const gchar *native_path;
 	GUdevDevice *native;
 	gboolean is_present;
+	gdouble charge;
+	gdouble charge_full;
+	gdouble charge_full_design;
 	gdouble energy;
 	gdouble energy_full;
 	gdouble energy_full_design;
@@ -586,6 +592,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	}
 
 	/* get the current charge */
+	charge = sysfs_get_double (native_path, "charge_now") / 1000000.0;
 	energy = sysfs_get_double (native_path, "energy_now") / 1000000.0;
 	if (energy < 0.01)
 		energy = sysfs_get_double (native_path, "energy_avg") / 1000000.0;
@@ -625,15 +632,15 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			      NULL);
 
 		/* these don't change at runtime */
+		charge_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
 		energy_full = sysfs_get_double (native_path, "energy_full") / 1000000.0;
+		charge_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
 
 		/* convert charge to energy */
 		if (energy_full < 0.01) {
-			energy_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
-			energy_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
-			energy_full *= voltage_design;
-			energy_full_design *= voltage_design;
+			energy_full = charge_full * voltage_design;
+			energy_full_design = charge_full_design * voltage_design;
 			supply->priv->coldplug_units = UP_DEVICE_SUPPLY_COLDPLUG_UNITS_CHARGE;
 		}
 
@@ -664,7 +671,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	} else {
 		/* get the old full */
 		g_object_get (device,
+			      "charge-full", &charge_full,
 			      "energy-full", &energy_full,
+			      "charge-full-design", &charge_full_design,
 			      "energy-full-design", &energy_full_design,
 			      NULL);
 	}
@@ -674,25 +683,18 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	/* this is the new value in uW */
 	energy_rate = fabs (sysfs_get_double (native_path, "power_now") / 1000000.0);
 	if (energy_rate < 0.01) {
-		gdouble charge_full;
-
 		/* convert charge to energy */
 		if (energy < 0.01) {
-			energy = sysfs_get_double (native_path, "charge_now") / 1000000.0;
-			if (energy < 0.01)
+			if ((energy = charge) < 0.01)
 				energy = sysfs_get_double (native_path, "charge_avg") / 1000000.0;
 			energy *= voltage_design;
 		}
-
-		charge_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
-		if (charge_full < 0.01)
-			charge_full = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 
 		/* If charge_full exists, then current_now is always reported in uA.
 		 * In the legacy case, where energy only units exist, and power_now isn't present
 		 * current_now is power in uW. */
 		energy_rate = fabs (sysfs_get_double (native_path, "current_now") / 1000000.0);
-		if (charge_full != 0)
+		if (charge_full != 0 || charge_full_design != 0)
 			energy_rate *= voltage_design;
 	}
 
@@ -851,6 +853,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	*out_state = state;
 
 	g_object_set (device,
+		      "charge", charge,
+		      "charge-full", charge_full,
+		      "charge-full-design", charge_full_design,
 		      "energy", energy,
 		      "energy-full", energy_full,
 		      "energy-full-design", energy_full_design,
