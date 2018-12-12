@@ -671,6 +671,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		}
 		g_object_set (device,
 			      "capacity", capacity,
+			      "energy-full-design", energy_full_design,
 			      "voltage-min-design", voltage_min_design,
 			      "voltage-max-design", voltage_max_design,
 			      NULL);
@@ -683,7 +684,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			      "charge-full", &charge_full,
 			      "energy-full", &energy_full,
 			      "charge-full-design", &charge_full_design,
-			      "energy-full-design", &energy_full_design,
 			      NULL);
 	}
 
@@ -867,7 +867,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		      "charge-full-design", charge_full_design,
 		      "energy", energy,
 		      "energy-full", energy_full,
-		      "energy-full-design", energy_full_design,
 		      "energy-rate", energy_rate,
 		      "percentage", percentage,
 		      "state", state,
