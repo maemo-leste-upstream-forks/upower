@@ -139,6 +139,8 @@ up_device_supply_reset_values (UpDeviceSupply *supply)
 		      "energy-full-design", (gdouble) 0.0,
 		      "energy-rate", (gdouble) 0.0,
 		      "voltage", (gdouble) 0.0,
+		      "voltage-min-design", (gdouble) 0.0,
+		      "voltage-max-design", (gdouble) 0.0,
 		      "time-to-empty", (gint64) 0,
 		      "time-to-full", (gint64) 0,
 		      "percentage", (gdouble) 0.0,
@@ -559,6 +561,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	gdouble capacity = 100.0f;
 	gdouble percentage = 0.0f;
 	gdouble voltage;
+	gdouble voltage_min_design;
+	gdouble voltage_max_design;
 	gint64 time_to_empty;
 	gint64 time_to_full;
 	gdouble temp;
@@ -635,6 +639,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy_full = sysfs_get_double (native_path, "energy_full") / 1000000.0;
 		charge_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
+		voltage_min_design = sysfs_get_double (native_path, "voltage_min_design") / 1000000.0;
+		voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
 
 		/* convert charge to energy */
 		if (energy_full < 0.01) {
@@ -663,7 +669,11 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			if (capacity > 100.0)
 				capacity = 100.0;
 		}
-		g_object_set (device, "capacity", capacity, NULL);
+		g_object_set (device,
+			      "capacity", capacity,
+			      "voltage-min-design", voltage_min_design,
+			      "voltage-max-design", voltage_max_design,
+			      NULL);
 
 		/* we only coldplug once, as these values will never change */
 		supply->priv->has_coldplug_values = TRUE;

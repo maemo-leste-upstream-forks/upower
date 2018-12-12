@@ -110,6 +110,8 @@ libupower-glib.so.3 libupower-glib3 #MINVER#
  (optional)up_exported_device_get_update_time@Base 0.99.4
  (optional)up_exported_device_get_vendor@Base 0.99.4
  (optional)up_exported_device_get_voltage@Base 0.99.4
+ (optional)up_exported_device_get_voltage_min_design@Base 1:0.99.7.4
+ (optional)up_exported_device_get_voltage_max_design@Base 1:0.99.7.4
  (optional)up_exported_device_get_warning_level@Base 0.99.4
  (optional)up_exported_device_interface_info@Base 0.99.4
  (optional)up_exported_device_override_properties@Base 0.99.4
@@ -151,6 +153,8 @@ libupower-glib.so.3 libupower-glib3 #MINVER#
  (optional)up_exported_device_set_update_time@Base 0.99.4
  (optional)up_exported_device_set_vendor@Base 0.99.4
  (optional)up_exported_device_set_voltage@Base 0.99.4
+ (optional)up_exported_device_set_voltage_min_design@Base 1:0.99.7.4
+ (optional)up_exported_device_set_voltage_max_design@Base 1:0.99.7.4
  (optional)up_exported_device_set_warning_level@Base 0.99.4
  (optional)up_exported_device_skeleton_get_type@Base 0.99.4
  (optional)up_exported_device_skeleton_new@Base 0.99.4

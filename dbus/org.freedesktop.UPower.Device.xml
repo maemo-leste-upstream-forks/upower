@@ -106,6 +106,14 @@ method return sender=:1.386 -> dest=:1.477 reply_serial=2
          variant             double 16.415
       )
       dict entry(
+         string "voltage-min-design"
+         variant             double 12
+      )
+      dict entry(
+         string "voltage-max-design"
+         variant             double 16.8
+      )
+      dict entry(
          string "time-to-empty"
          variant             int64 0
       )
@@ -523,6 +531,26 @@ method return sender=:1.386 -> dest=:1.477 reply_serial=2
         <doc:description>
           <doc:para>
             Voltage in the Cell or being recorded by the meter.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+
+    <property name="VoltageMinDesign" type="d" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Battery design voltage when discharged.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+
+    <property name="VoltageMaxDesign" type="d" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Battery design voltage when fully charged.
           </doc:para>
         </doc:description>
       </doc:doc>
