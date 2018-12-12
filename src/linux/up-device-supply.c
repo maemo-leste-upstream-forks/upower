@@ -600,6 +600,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	energy = sysfs_get_double (native_path, "energy_now") / 1000000.0;
 	if (energy < 0.01)
 		energy = sysfs_get_double (native_path, "energy_avg") / 1000000.0;
+	charge_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
 
 	/* used to convert A to W later */
 	voltage_design = up_device_supply_get_design_voltage (supply, native_path);
@@ -636,7 +637,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			      NULL);
 
 		/* these don't change at runtime */
-		charge_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
 		energy_full = sysfs_get_double (native_path, "energy_full") / 1000000.0;
 		charge_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
@@ -683,7 +683,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	} else {
 		/* get the old full */
 		g_object_get (device,
-			      "charge-full", &charge_full,
 			      "energy-full", &energy_full,
 			      "charge-full-design", &charge_full_design,
 			      NULL);
