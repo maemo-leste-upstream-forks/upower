@@ -680,10 +680,16 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			if (capacity > 100.0)
 				capacity = 100.0;
 		}
+
+		voltage = sysfs_get_double (native_path, "voltage_now") / 1000000.0;
+		if (voltage < 0.01)
+			voltage = sysfs_get_double (native_path, "voltage_avg") / 1000000.0;
+
 		g_object_set (device,
 			      "capacity", capacity,
 			      "charge-full-design", charge_full_design,
 			      "energy-full-design", energy_full_design,
+			      "voltage", voltage,
 			      NULL);
 
 		/* we only coldplug once, as these values will never change */
@@ -744,6 +750,50 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	/* get a precise percentage */
         if (sysfs_file_exists (native_path, "capacity")) {
 		percentage = sysfs_get_double (native_path, "capacity");
+
+		/* If battery is not calibrated, estimate percentage using voltage  */
+		if (charge_full == 0 && percentage == 0 &&
+		    supply->priv->voltage_min_design != 0 &&
+		    supply->priv->voltage_max_design != 0)
+		{
+			if (state == UP_DEVICE_STATE_EMPTY ||
+			    state == UP_DEVICE_STATE_FULLY_CHARGED)
+			{
+				percentage = state == UP_DEVICE_STATE_EMPTY ? 0 : 100;
+			}
+			else
+			{
+				gdouble voltage_empty = supply->priv->voltage_min_design;
+				gdouble voltage_full  = supply->priv->voltage_max_design;
+				gdouble percentage_prev;
+				gdouble voltage_prev;
+				gdouble voltage_avg;
+
+				g_object_get (device,
+					      "percentage", &percentage_prev,
+					      "voltage", &voltage_prev,
+					      NULL);
+
+				voltage_avg = (voltage_prev + voltage) / 2;
+
+				if (state == UP_DEVICE_STATE_CHARGING)
+					voltage_empty += 0.4;
+				else
+					voltage_empty += 0.1;
+
+				percentage = (voltage_avg - voltage_empty) / (voltage_full - voltage_empty) * 100;
+				percentage = round (percentage);
+
+				if (percentage_prev != 0)
+				{
+					if (state == UP_DEVICE_STATE_CHARGING)
+						percentage = fmax (percentage_prev, percentage);
+					else
+						percentage = fmin (percentage_prev, percentage);
+				}
+			}
+		}
+
 		percentage = CLAMP(percentage, 0.0f, 100.0f);
                 /* for devices which provide capacity, but not {energy,charge}_now */
                 if (energy < 0.1f && energy_full > 0.0f)
