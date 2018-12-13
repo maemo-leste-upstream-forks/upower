@@ -59,6 +59,7 @@ struct UpDeviceSupplyPrivate
 	guint			 poll_timer_id;
 	gboolean		 has_coldplug_values;
 	gboolean		 coldplug_units;
+	gdouble			 voltage_design;
 	gdouble			 voltage_min_design;
 	gdouble			 voltage_max_design;
 	gdouble			*energy_old;
@@ -113,6 +114,7 @@ up_device_supply_reset_values (UpDeviceSupply *supply)
 	supply->priv->coldplug_units = UP_DEVICE_SUPPLY_COLDPLUG_UNITS_ENERGY;
 	supply->priv->voltage_min_design = 0;
 	supply->priv->voltage_max_design = 0;
+	supply->priv->voltage_design = 0;
 	supply->priv->rate_old = 0;
 
 	for (i = 0; i < UP_DEVICE_SUPPLY_ENERGY_OLD_LENGTH; ++i) {
@@ -547,7 +549,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 				  UpDeviceState  *out_state)
 {
 	gchar *technology_native = NULL;
-	gdouble voltage_design;
 	UpDeviceState old_state;
 	UpDeviceState state;
 	UpDevice *device = UP_DEVICE (supply);
@@ -602,9 +603,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy = sysfs_get_double (native_path, "energy_avg") / 1000000.0;
 	charge_full = sysfs_get_double (native_path, "charge_full") / 1000000.0;
 
-	/* used to convert A to W later */
-	voltage_design = up_device_supply_get_design_voltage (supply, native_path);
-
 	/* initial values */
 	if (!supply->priv->has_coldplug_values ||
 	    up_device_supply_units_changed (supply, native_path)) {
@@ -612,6 +610,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		g_object_set (device,
 			      "power-supply", supply->priv->is_power_supply,
 			      NULL);
+
+		/* used to convert A to W later */
+		supply->priv->voltage_design = up_device_supply_get_design_voltage (supply, native_path);
 
 		/* the ACPI spec is bad at defining battery type constants */
 		technology_native = up_device_supply_get_string (native_path, "technology");
@@ -645,8 +646,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 
 		/* convert charge to energy */
 		if (energy_full < 0.01) {
-			energy_full = charge_full * voltage_design;
-			energy_full_design = charge_full_design * voltage_design;
+			energy_full = charge_full * supply->priv->voltage_design;
+			energy_full_design = charge_full_design * supply->priv->voltage_design;
 			supply->priv->coldplug_units = UP_DEVICE_SUPPLY_COLDPLUG_UNITS_CHARGE;
 		}
 
@@ -695,7 +696,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		if (energy < 0.01) {
 			if ((energy = charge) < 0.01)
 				energy = sysfs_get_double (native_path, "charge_avg") / 1000000.0;
-			energy *= voltage_design;
+			energy *= supply->priv->voltage_design;
 		}
 
 		/* If charge_full exists, then current_now is always reported in uA.
@@ -703,7 +704,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		 * current_now is power in uW. */
 		energy_rate = fabs (sysfs_get_double (native_path, "current_now") / 1000000.0);
 		if (charge_full != 0 || charge_full_design != 0)
-			energy_rate *= voltage_design;
+			energy_rate *= supply->priv->voltage_design;
 	}
 
 	/* some batteries don't update last_full attribute */
