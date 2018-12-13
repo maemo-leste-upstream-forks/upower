@@ -59,6 +59,8 @@ struct UpDeviceSupplyPrivate
 	guint			 poll_timer_id;
 	gboolean		 has_coldplug_values;
 	gboolean		 coldplug_units;
+	gdouble			 voltage_min_design;
+	gdouble			 voltage_max_design;
 	gdouble			*energy_old;
 	GTimeVal		*energy_old_timespec;
 	guint			 energy_old_first;
@@ -109,6 +111,8 @@ up_device_supply_reset_values (UpDeviceSupply *supply)
 
 	supply->priv->has_coldplug_values = FALSE;
 	supply->priv->coldplug_units = UP_DEVICE_SUPPLY_COLDPLUG_UNITS_ENERGY;
+	supply->priv->voltage_min_design = 0;
+	supply->priv->voltage_max_design = 0;
 	supply->priv->rate_old = 0;
 
 	for (i = 0; i < UP_DEVICE_SUPPLY_ENERGY_OLD_LENGTH; ++i) {
@@ -140,8 +144,6 @@ up_device_supply_reset_values (UpDeviceSupply *supply)
 		      "energy-full-design", (gdouble) 0.0,
 		      "energy-rate", (gdouble) 0.0,
 		      "voltage", (gdouble) 0.0,
-		      "voltage-min-design", (gdouble) 0.0,
-		      "voltage-max-design", (gdouble) 0.0,
 		      "time-to-empty", (gint64) 0,
 		      "time-to-full", (gint64) 0,
 		      "percentage", (gdouble) 0.0,
@@ -562,8 +564,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	gdouble capacity = 100.0f;
 	gdouble percentage = 0.0f;
 	gdouble voltage;
-	gdouble voltage_min_design;
-	gdouble voltage_max_design;
 	gint64 time_to_empty;
 	gint64 time_to_full;
 	gdouble temp;
@@ -640,8 +640,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy_full = sysfs_get_double (native_path, "energy_full") / 1000000.0;
 		charge_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
-		voltage_min_design = sysfs_get_double (native_path, "voltage_min_design") / 1000000.0;
-		voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
+		supply->priv->voltage_min_design = sysfs_get_double (native_path, "voltage_min_design") / 1000000.0;
+		supply->priv->voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
 
 		/* convert charge to energy */
 		if (energy_full < 0.01) {
@@ -674,8 +674,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			      "capacity", capacity,
 			      "charge-full-design", charge_full_design,
 			      "energy-full-design", energy_full_design,
-			      "voltage-min-design", voltage_min_design,
-			      "voltage-max-design", voltage_max_design,
 			      NULL);
 
 		/* we only coldplug once, as these values will never change */
