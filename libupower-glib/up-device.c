@@ -86,8 +86,6 @@ enum {
 	PROP_ENERGY_FULL_DESIGN,
 	PROP_ENERGY_RATE,
 	PROP_VOLTAGE,
-	PROP_VOLTAGE_MIN_DESIGN,
-	PROP_VOLTAGE_MAX_DESIGN,
 	PROP_LUMINOSITY,
 	PROP_TIME_TO_EMPTY,
 	PROP_TIME_TO_FULL,
@@ -353,10 +351,6 @@ up_device_to_text (UpDevice *device)
 	    kind == UP_DEVICE_KIND_MONITOR) {
 		if (up_exported_device_get_voltage (priv->proxy_device) > 0)
 			g_string_append_printf (string, "    voltage:             %g V\n", up_exported_device_get_voltage (priv->proxy_device));
-		if (up_exported_device_get_voltage_min_design (priv->proxy_device) > 0)
-			g_string_append_printf (string, "    voltage-min-design:  %g V\n", up_exported_device_get_voltage_min_design (priv->proxy_device));
-		if (up_exported_device_get_voltage_max_design (priv->proxy_device) > 0)
-			g_string_append_printf (string, "    voltage-max-design:  %g V\n", up_exported_device_get_voltage_max_design (priv->proxy_device));
 	}
 	if (kind == UP_DEVICE_KIND_KEYBOARD) {
 		if (up_exported_device_get_luminosity (priv->proxy_device) > 0)
@@ -682,12 +676,6 @@ up_device_set_property (GObject *object, guint prop_id, const GValue *value, GPa
 	case PROP_VOLTAGE:
 		up_exported_device_set_voltage (device->priv->proxy_device, g_value_get_double (value));
 		break;
-	case PROP_VOLTAGE_MIN_DESIGN:
-		up_exported_device_set_voltage_min_design (device->priv->proxy_device, g_value_get_double (value));
-		break;
-	case PROP_VOLTAGE_MAX_DESIGN:
-		up_exported_device_set_voltage_max_design (device->priv->proxy_device, g_value_get_double (value));
-		break;
 	case PROP_LUMINOSITY:
 		up_exported_device_set_luminosity (device->priv->proxy_device, g_value_get_double (value));
 		break;
@@ -813,12 +801,6 @@ up_device_get_property (GObject *object, guint prop_id, GValue *value, GParamSpe
 		break;
 	case PROP_VOLTAGE:
 		g_value_set_double (value, up_exported_device_get_voltage (device->priv->proxy_device));
-		break;
-	case PROP_VOLTAGE_MIN_DESIGN:
-		g_value_set_double (value, up_exported_device_get_voltage_min_design (device->priv->proxy_device));
-		break;
-	case PROP_VOLTAGE_MAX_DESIGN:
-		g_value_set_double (value, up_exported_device_get_voltage_max_design (device->priv->proxy_device));
 		break;
 	case PROP_LUMINOSITY:
 		g_value_set_double (value, up_exported_device_get_luminosity (device->priv->proxy_device));
@@ -1174,30 +1156,6 @@ up_device_class_init (UpDeviceClass *klass)
 							      0.0, G_MAXDOUBLE, 0.0,
 							      G_PARAM_READWRITE));
 
-	/**
-	 * UpDevice:voltage-min-design:
-	 *
-	 * Battery design voltage when discharged.
-	 *
-	 * Since: 1:0.99.7.4
-	 **/
-	g_object_class_install_property (object_class,
-					 PROP_VOLTAGE_MIN_DESIGN,
-					 g_param_spec_double ("voltage-min-design", NULL, NULL,
-							      0.0, G_MAXDOUBLE, 0.0,
-							      G_PARAM_READWRITE));
-	/**
-	 * UpDevice:voltage-max-design:
-	 *
-	 * Battery design voltage when fully charged.
-	 *
-	 * Since: 1:0.99.7.4
-	 **/
-	g_object_class_install_property (object_class,
-					 PROP_VOLTAGE_MAX_DESIGN,
-					 g_param_spec_double ("voltage-max-design", NULL, NULL,
-							      0.0, G_MAXDOUBLE, 0.0,
-							      G_PARAM_READWRITE));
 	/**
 	 * UpDevice:luminosity:
 	 *
