@@ -549,6 +549,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 				  UpDeviceState  *out_state)
 {
 	gchar *technology_native = NULL;
+	UpDeviceTechnology technology;
 	UpDeviceState old_state;
 	UpDeviceState state;
 	UpDevice *device = UP_DEVICE (supply);
@@ -616,7 +617,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 
 		/* the ACPI spec is bad at defining battery type constants */
 		technology_native = up_device_supply_get_string (native_path, "technology");
-		g_object_set (device, "technology", up_device_supply_convert_device_technology (technology_native), NULL);
+		technology = up_device_supply_convert_device_technology (technology_native);
+		g_object_set (device, "technology", technology, NULL);
 
 		/* get values which may be blank */
 		manufacturer = up_device_supply_get_string (native_path, "manufacturer");
@@ -643,6 +645,14 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
 		supply->priv->voltage_min_design = sysfs_get_double (native_path, "voltage_min_design") / 1000000.0;
 		supply->priv->voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
+
+		if ((!supply->priv->voltage_min_design || !supply->priv->voltage_max_design) &&
+		    technology == UP_DEVICE_TECHNOLOGY_LITHIUM_ION && supply->priv->voltage_design < 4.25) {
+			if (!supply->priv->voltage_min_design)
+				supply->priv->voltage_min_design = 3.0;
+			if (!supply->priv->voltage_max_design)
+				supply->priv->voltage_max_design = 4.2;
+		}
 
 		/* convert charge to energy */
 		if (energy_full < 0.01) {
