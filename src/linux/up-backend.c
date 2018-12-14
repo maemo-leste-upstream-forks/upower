@@ -618,7 +618,9 @@ up_backend_get_critical_action (UpBackend *backend)
 							 G_DBUS_CALL_FLAGS_NONE,
 							 -1, NULL, NULL);
 			action_available = check_action_result (result);
-			g_variant_unref (result);
+
+			if (result != NULL)
+				g_variant_unref (result);
 
 			if (!action_available)
 				continue;
