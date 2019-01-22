@@ -1,3 +1,10 @@
+upower (0.99.9-3) UNRELEASED; urgency=medium
+
+  * d/p/daemon-Consider-pending-charge-when-calculating-the-displ.patch:
+    - Detect AC state on pending state (LP: #1745032)
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Thu, 24 Jan 2019 23:16:54 +0100
+
 upower (0.99.9-2) unstable; urgency=medium
 
   * Move D-Bus policy file to /usr/share/dbus-1/system.d/

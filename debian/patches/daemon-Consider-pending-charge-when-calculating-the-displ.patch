@@ -1,0 +1,36 @@
+From: =?utf-8?q?Jo=C3=A3o_Paulo_Rechi_Vita?= <jprvita@endlessm.com>
+Date: Mon, 15 Oct 2018 17:05:27 -0700
+Subject: daemon: Consider pending-charge when calculating the display state
+
+Without this change if all batteries in the system are in the
+pending-charge state, the display device state is set to unknown, and
+its icon to battery-missing-symbolic.
+
+This change makes the pending-charge state be considered when
+calculating the DisplayDevice state, setting it to pending-charge if at
+least one battery in the system is pending-charge and no other is
+charging or discharging.
+
+Closes: #81
+Closes: #19
+
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/upower/+bug/1745032
+Origin: https://gitlab.freedesktop.org/upower/upower/commit/a074631c0b174
+---
+ src/up-daemon.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/up-daemon.c b/src/up-daemon.c
+index 1a5dddc..542477a 100644
+--- a/src/up-daemon.c
++++ b/src/up-daemon.c
+@@ -218,6 +218,9 @@ up_daemon_update_display_battery (UpDaemon *daemon)
+ 		else if (state == UP_DEVICE_STATE_DISCHARGING &&
+ 			 state_total != UP_DEVICE_STATE_CHARGING)
+ 			state_total = UP_DEVICE_STATE_DISCHARGING;
++		else if (state == UP_DEVICE_STATE_PENDING_CHARGE &&
++			 (state_total == UP_DEVICE_STATE_UNKNOWN || state_total == UP_DEVICE_STATE_PENDING_CHARGE))
++			state_total = UP_DEVICE_STATE_PENDING_CHARGE;
+ 		else if (state == UP_DEVICE_STATE_FULLY_CHARGED &&
+ 			 state_total == UP_DEVICE_STATE_UNKNOWN)
+ 			state_total = UP_DEVICE_STATE_FULLY_CHARGED;
