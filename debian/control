@@ -19,7 +19,7 @@ Build-Depends: debhelper (>= 10.3),
                pkg-config,
                udev [linux-any],
                xsltproc,
-Standards-Version: 4.2.1
+Standards-Version: 4.3.0
 Vcs-Git: https://salsa.debian.org/utopia-team/upower.git
 Vcs-Browser: https://salsa.debian.org/utopia-team/upower/
 Homepage: https://upower.freedesktop.org/
