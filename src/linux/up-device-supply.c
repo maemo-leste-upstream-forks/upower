@@ -669,7 +669,6 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	}
 
 	state = up_device_supply_get_state (native_path);
-	*out_state = state;
 
 	/* this is the new value in uW */
 	energy_rate = fabs (sysfs_get_double (native_path, "power_now") / 1000000.0);
@@ -732,6 +731,12 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		percentage = 100.0 * energy / energy_full;
 		percentage = CLAMP(percentage, 0.0f, 100.0f);
 	}
+
+	/* Some devices report "Not charging" when the battery is full and AC
+	 * power is connected. In this situation we should report fully-charged
+	 * instead of pending-charge. */
+	if (state == UP_DEVICE_STATE_PENDING_CHARGE && percentage == 100.0)
+		state = UP_DEVICE_STATE_FULLY_CHARGED;
 
 	/* the battery isn't charging or discharging, it's just
 	 * sitting there half full doing nothing: try to guess a state */
@@ -832,6 +837,8 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		}
 		supply->priv->energy_old_first = 0;
 	}
+
+	*out_state = state;
 
 	g_object_set (device,
 		      "energy", energy,
