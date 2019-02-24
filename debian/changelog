@@ -1,3 +1,11 @@
+upower (0.99.10-1) unstable; urgency=medium
+
+  * New upstream bug fix release 0.99.10
+  * Bump Standards-Version to 4.3.0. No changes necessary.
+  * Drop obsolete debian/upower.lintian-overrides
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 24 Feb 2019 07:23:30 +0000
+
 upower (0.99.9-3) unstable; urgency=medium
 
   * d/p/daemon-Consider-pending-charge-when-calculating-the-displ.patch:
