@@ -6,7 +6,7 @@
 autoreconf:
 	gtkdocize --copy
 	autopoint --force
-	AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
+	autoreconf --force --install --verbose
 
 override_dh_autoreconf:
 	dh_autoreconf debian/rules -- autoreconf
