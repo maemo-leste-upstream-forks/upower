@@ -1,3 +1,18 @@
+upower (0.99.11-1) unstable; urgency=medium
+
+  * New upstream version 0.99.11
+  * Move intltool → gettext build dependency.
+    The new upstream release stopped using the deprecated intltool.
+  * Bump Standards-Version to 4.4.0.  No changes necessary.
+  * d/t/control: Add missing python3-dbusmock test dependency.
+    Without this, the test just skips and does nothing.
+  * Mark "build" autopkgtest as isolation-container.
+    In a schroot, where the daemon is not running,
+    up_client_get_daemon_version() returns NULL and the subsequent strlen()
+    then crashes.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 03 Sep 2019 07:48:09 +0000
+
 upower (0.99.10-1) unstable; urgency=medium
 
   * New upstream bug fix release 0.99.10
