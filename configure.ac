@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 m4_define([up_major_version], [0])
 m4_define([up_minor_version], [99])
-m4_define([up_micro_version], [10])
+m4_define([up_micro_version], [11])
 m4_define([up_version],
           [up_major_version.up_minor_version.up_micro_version])
 
@@ -152,7 +152,7 @@ AX_CHECK_LINK_FLAG([-Wl,-z,relro,-z,now],
 		   [RELRO_LDFLAGS="-Wl,-z,relro,-z,now"])
 AC_SUBST([RELRO_LDFLAGS])
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.34.0 gobject-2.0])
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.38.0 gobject-2.0])
 PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.16.1])
 PKG_CHECK_MODULES(GIO_UNIX, [gio-unix-2.0])
 
@@ -229,9 +229,7 @@ if test "x$GCC" = "xyes"; then
 fi
 
 # i18n support
-IT_PROG_INTLTOOL([0.40.0])
-
-AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 AM_GNU_GETTEXT([external])
 
 AC_SUBST([GETTEXT_PACKAGE],[${PACKAGE_TARNAME}])

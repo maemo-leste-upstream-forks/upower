@@ -28,8 +28,6 @@
 
 static void     up_config_finalize	(GObject     *object);
 
-#define UP_CONFIG_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_CONFIG, UpConfigPrivate))
-
 /**
  * UpConfigPrivate:
  *
@@ -40,7 +38,7 @@ struct _UpConfigPrivate
 	GKeyFile			*keyfile;
 };
 
-G_DEFINE_TYPE (UpConfig, up_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpConfig, up_config, G_TYPE_OBJECT)
 
 static gpointer up_config_object = NULL;
 
@@ -88,7 +86,6 @@ up_config_class_init (UpConfigClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	object_class->finalize = up_config_finalize;
-	g_type_class_add_private (klass, sizeof (UpConfigPrivate));
 }
 
 /**
@@ -101,7 +98,7 @@ up_config_init (UpConfig *config)
 	GError *error = NULL;
 	gchar *filename;
 
-	config->priv = UP_CONFIG_GET_PRIVATE (config);
+	config->priv = up_config_get_instance_private (config);
 	config->priv->keyfile = g_key_file_new ();
 
 	filename = g_strdup (g_getenv ("UPOWER_CONF_FILE_NAME"));

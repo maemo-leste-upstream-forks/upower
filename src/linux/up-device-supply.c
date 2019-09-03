@@ -70,12 +70,13 @@ struct UpDeviceSupplyPrivate
 	gboolean		 shown_invalid_voltage_warning;
 };
 
-G_DEFINE_TYPE (UpDeviceSupply, up_device_supply, UP_TYPE_DEVICE)
-#define UP_DEVICE_SUPPLY_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_DEVICE_SUPPLY, UpDeviceSupplyPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (UpDeviceSupply, up_device_supply, UP_TYPE_DEVICE)
 
 static gboolean		 up_device_supply_refresh	 	(UpDevice *device);
 static void		 up_device_supply_setup_unknown_poll	(UpDevice      *device,
 								 UpDeviceState  state);
+static UpDeviceKind	 up_device_supply_guess_type		(GUdevDevice *native,
+								 const char *native_path);
 
 static RefreshResult
 up_device_supply_refresh_line_power (UpDeviceSupply *supply)
@@ -919,9 +920,18 @@ up_device_supply_refresh_device (UpDeviceSupply *supply,
 	GUdevDevice *native;
 	gdouble percentage = 0.0f;
 	UpDeviceLevel level = UP_DEVICE_LEVEL_NONE;
+	UpDeviceKind type;
 
 	native = G_UDEV_DEVICE (up_device_get_native (device));
 	native_path = g_udev_device_get_sysfs_path (native);
+
+	/* Try getting a more precise type again */
+	g_object_get (device, "type", &type, NULL);
+	if (type == UP_DEVICE_KIND_BATTERY) {
+		type = up_device_supply_guess_type (native, native_path);
+		if (type != UP_DEVICE_KIND_BATTERY)
+			g_object_set (device, "type", type, NULL);
+	}
 
 	/* initial values */
 	if (!supply->priv->has_coldplug_values) {
@@ -1133,7 +1143,7 @@ up_device_supply_coldplug (UpDevice *device)
 	    type != UP_DEVICE_KIND_BATTERY)
 		up_daemon_start_poll (G_OBJECT (device), (GSourceFunc) up_device_supply_refresh);
 	else if (type == UP_DEVICE_KIND_BATTERY &&
-		 !supply->priv->disable_battery_poll)
+		 (!supply->priv->disable_battery_poll || !supply->priv->is_power_supply))
 		up_daemon_start_poll (G_OBJECT (device), (GSourceFunc) up_device_supply_refresh);
 
 	/* coldplug values */
@@ -1193,17 +1203,14 @@ up_device_supply_refresh (UpDevice *device)
 	UpDeviceState state;
 
 	g_object_get (device, "type", &type, NULL);
-	switch (type) {
-	case UP_DEVICE_KIND_LINE_POWER:
+	if (type == UP_DEVICE_KIND_LINE_POWER) {
 		ret = up_device_supply_refresh_line_power (supply);
-		break;
-	case UP_DEVICE_KIND_BATTERY:
+	} else if (type == UP_DEVICE_KIND_BATTERY &&
+		   supply->priv->is_power_supply) {
 		up_device_supply_disable_unknown_poll (device);
 		ret = up_device_supply_refresh_battery (supply, &state);
-		break;
-	default:
+	} else {
 		ret = up_device_supply_refresh_device (supply, &state);
-		break;
 	}
 
 	/* reset time if we got new data */
@@ -1221,7 +1228,7 @@ up_device_supply_init (UpDeviceSupply *supply)
 {
 	UpConfig *config;
 
-	supply->priv = UP_DEVICE_SUPPLY_GET_PRIVATE (supply);
+	supply->priv = up_device_supply_get_instance_private (supply);
 
 	/* allocate the stats for the battery charging & discharging */
 	supply->priv->energy_old = g_new (gdouble, UP_DEVICE_SUPPLY_ENERGY_OLD_LENGTH);
@@ -1276,8 +1283,6 @@ up_device_supply_class_init (UpDeviceSupplyClass *klass)
 	device_class->get_online = up_device_supply_get_online;
 	device_class->coldplug = up_device_supply_coldplug;
 	device_class->refresh = up_device_supply_refresh;
-
-	g_type_class_add_private (klass, sizeof (UpDeviceSupplyPrivate));
 }
 
 /**

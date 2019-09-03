@@ -30,15 +30,13 @@
 
 static void	up_device_list_finalize	(GObject		*object);
 
-#define UP_DEVICE_LIST_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_DEVICE_LIST, UpDeviceListPrivate))
-
 struct UpDeviceListPrivate
 {
 	GPtrArray		*array;
 	GHashTable		*map_native_path_to_device;
 };
 
-G_DEFINE_TYPE (UpDeviceList, up_device_list, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpDeviceList, up_device_list, G_TYPE_OBJECT)
 
 /**
  * up_device_list_lookup:
@@ -183,7 +181,6 @@ up_device_list_class_init (UpDeviceListClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	object_class->finalize = up_device_list_finalize;
-	g_type_class_add_private (klass, sizeof (UpDeviceListPrivate));
 }
 
 /**
@@ -193,7 +190,7 @@ up_device_list_class_init (UpDeviceListClass *klass)
 static void
 up_device_list_init (UpDeviceList *list)
 {
-	list->priv = UP_DEVICE_LIST_GET_PRIVATE (list);
+	list->priv = up_device_list_get_instance_private (list);
 	list->priv->array = g_ptr_array_new_with_free_func (g_object_unref);
 	list->priv->map_native_path_to_device = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 }

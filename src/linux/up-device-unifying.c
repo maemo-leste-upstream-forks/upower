@@ -35,8 +35,7 @@ struct UpDeviceUnifyingPrivate
 	HidppDevice		*hidpp_device;
 };
 
-G_DEFINE_TYPE (UpDeviceUnifying, up_device_unifying, UP_TYPE_DEVICE)
-#define UP_DEVICE_UNIFYING_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_DEVICE_UNIFYING, UpDeviceUnifyingPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (UpDeviceUnifying, up_device_unifying, UP_TYPE_DEVICE)
 
 /**
  * up_device_unifying_refresh:
@@ -300,7 +299,7 @@ out:
 static void
 up_device_unifying_init (UpDeviceUnifying *unifying)
 {
-	unifying->priv = UP_DEVICE_UNIFYING_GET_PRIVATE (unifying);
+	unifying->priv = up_device_unifying_get_instance_private (unifying);
 }
 
 /**
@@ -335,8 +334,6 @@ up_device_unifying_class_init (UpDeviceUnifyingClass *klass)
 	object_class->finalize = up_device_unifying_finalize;
 	device_class->coldplug = up_device_unifying_coldplug;
 	device_class->refresh = up_device_unifying_refresh;
-
-	g_type_class_add_private (klass, sizeof (UpDeviceUnifyingPrivate));
 }
 
 /**

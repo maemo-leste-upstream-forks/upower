@@ -57,8 +57,6 @@ static void	up_backend_finalize	(GObject		*object);
 #define LOGIND_DBUS_PATH                       "/org/freedesktop/login1"
 #define LOGIND_DBUS_INTERFACE                  "org.freedesktop.login1.Manager"
 
-#define UP_BACKEND_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_BACKEND, UpBackendPrivate))
-
 struct UpBackendPrivate
 {
 	UpDaemon		*daemon;
@@ -83,7 +81,7 @@ enum {
 
 static guint signals [SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE (UpBackend, up_backend, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpBackend, up_backend, G_TYPE_OBJECT)
 
 static gboolean up_backend_device_add (UpBackend *backend, GUdevDevice *native);
 static void up_backend_device_remove (UpBackend *backend, GUdevDevice *native);
@@ -805,8 +803,6 @@ up_backend_class_init (UpBackendClass *klass)
 			      G_STRUCT_OFFSET (UpBackendClass, device_removed),
 			      NULL, NULL, NULL,
 			      G_TYPE_NONE, 2, G_TYPE_POINTER, G_TYPE_POINTER);
-
-	g_type_class_add_private (klass, sizeof (UpBackendPrivate));
 }
 
 static void
@@ -815,7 +811,7 @@ up_backend_init (UpBackend *backend)
 	GDBusConnection *bus;
 	guint sleep_id;
 
-	backend->priv = UP_BACKEND_GET_PRIVATE (backend);
+	backend->priv = up_backend_get_instance_private (backend);
 	backend->priv->config = up_config_new ();
 	backend->priv->managed_devices = up_device_list_new ();
 	backend->priv->logind_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,

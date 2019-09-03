@@ -32,8 +32,6 @@ static void	up_wakeups_class_init	(UpWakeupsClass	*klass);
 static void	up_wakeups_init		(UpWakeups	*wakeups);
 static void	up_wakeups_finalize	(GObject	*object);
 
-#define UP_WAKEUPS_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_WAKEUPS, UpWakeupsPrivate))
-
 struct UpWakeupsPrivate
 {
 	UpExportedWakeups *proxy;
@@ -47,7 +45,7 @@ enum {
 
 static guint signals [UP_WAKEUPS_LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (UpWakeups, up_wakeups, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpWakeups, up_wakeups, G_TYPE_OBJECT)
 
 /**
  * up_wakeups_get_total_sync:
@@ -233,8 +231,6 @@ up_wakeups_class_init (UpWakeupsClass *klass)
 			      G_STRUCT_OFFSET (UpWakeupsClass, data_changed),
 			      NULL, NULL, g_cclosure_marshal_VOID__UINT,
 			      G_TYPE_NONE, 1, G_TYPE_UINT);
-
-	g_type_class_add_private (klass, sizeof (UpWakeupsPrivate));
 }
 
 /**
@@ -245,7 +241,7 @@ up_wakeups_init (UpWakeups *wakeups)
 {
 	GError *error = NULL;
 
-	wakeups->priv = UP_WAKEUPS_GET_PRIVATE (wakeups);
+	wakeups->priv = up_wakeups_get_instance_private (wakeups);
 
 	/* connect to main interface */
 	wakeups->priv->proxy = up_exported_wakeups_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,

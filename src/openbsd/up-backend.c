@@ -39,8 +39,6 @@ static gboolean		up_apm_device_get_on_battery	(UpDevice *device, gboolean *on_ba
 static gboolean		up_apm_device_get_online		(UpDevice *device, gboolean *online);
 static gboolean		up_apm_device_refresh		(UpDevice *device);
 
-#define UP_BACKEND_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_BACKEND, UpBackendPrivate))
-
 struct UpBackendPrivate
 {
 	UpDaemon		*daemon;
@@ -60,7 +58,7 @@ enum {
 
 static guint signals [SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE (UpBackend, up_backend, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpBackend, up_backend, G_TYPE_OBJECT)
 
 /**
  * functions called by upower daemon
@@ -585,8 +583,6 @@ up_backend_class_init (UpBackendClass *klass)
 			      G_STRUCT_OFFSET (UpBackendClass, device_removed),
 			      NULL, NULL, NULL,
 			      G_TYPE_NONE, 2, G_TYPE_POINTER, G_TYPE_POINTER);
-
-	g_type_class_add_private (klass, sizeof (UpBackendPrivate));
 }
 
 /**
@@ -599,7 +595,7 @@ up_backend_init (UpBackend *backend)
 	UpDeviceClass *device_class;
 	gint64 current_time;
 
-	backend->priv = UP_BACKEND_GET_PRIVATE (backend);
+	backend->priv = up_backend_get_instance_private (backend);
 	backend->priv->is_laptop = up_native_is_laptop();
 	g_debug("is_laptop:%d",backend->priv->is_laptop);
 	if (backend->priv->is_laptop)

@@ -44,8 +44,6 @@ static void	up_device_class_init	(UpDeviceClass	*klass);
 static void	up_device_init		(UpDevice	*device);
 static void	up_device_finalize	(GObject		*object);
 
-#define UP_DEVICE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_DEVICE, UpDevicePrivate))
-
 /**
  * UpDevicePrivate:
  *
@@ -94,7 +92,7 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE (UpDevice, up_device, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpDevice, up_device, G_TYPE_OBJECT)
 
 /*
  * up_device_changed_cb:
@@ -1202,8 +1200,6 @@ up_device_class_init (UpDeviceClass *klass)
 					 g_param_spec_string ("icon-name",
 							      NULL, NULL, NULL,
 							      G_PARAM_READWRITE));
-
-	g_type_class_add_private (klass, sizeof (UpDevicePrivate));
 }
 
 static void
@@ -1219,7 +1215,7 @@ value_free (GValue *value)
 static void
 up_device_init (UpDevice *device)
 {
-	device->priv = UP_DEVICE_GET_PRIVATE (device);
+	device->priv = up_device_get_instance_private (device);
 	device->priv->offline_props = g_hash_table_new_full (g_direct_hash,
 							     g_direct_equal,
 							     NULL,

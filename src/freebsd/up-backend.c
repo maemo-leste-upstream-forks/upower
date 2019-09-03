@@ -54,8 +54,6 @@ static gboolean	up_backend_acpi_devd_notify (UpBackend *backend, const gchar *sy
 static gboolean	up_backend_create_new_device (UpBackend *backend, UpAcpiNative *native);
 static void	up_backend_lid_coldplug (UpBackend *backend);
 
-#define UP_BACKEND_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_BACKEND, UpBackendPrivate))
-
 struct UpBackendPrivate
 {
 	UpDaemon		*daemon;
@@ -74,7 +72,7 @@ enum {
 
 static guint signals [SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE (UpBackend, up_backend, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpBackend, up_backend, G_TYPE_OBJECT)
 
 static const gchar *handlers[] = {
 	"battery",
@@ -404,8 +402,6 @@ up_backend_class_init (UpBackendClass *klass)
 			      G_STRUCT_OFFSET (UpBackendClass, device_removed),
 			      NULL, NULL, NULL,
 			      G_TYPE_NONE, 2, G_TYPE_POINTER, G_TYPE_POINTER);
-
-	g_type_class_add_private (klass, sizeof (UpBackendPrivate));
 }
 
 /**
@@ -414,7 +410,7 @@ up_backend_class_init (UpBackendClass *klass)
 static void
 up_backend_init (UpBackend *backend)
 {
-	backend->priv = UP_BACKEND_GET_PRIVATE (backend);
+	backend->priv = up_backend_get_instance_private (backend);
 	backend->priv->handle_map = g_hash_table_new_full (g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_object_unref);
 	backend->priv->config = up_config_new ();
 	backend->priv->seat_manager_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,

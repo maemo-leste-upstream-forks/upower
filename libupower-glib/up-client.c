@@ -43,8 +43,6 @@ static void	up_client_initable_iface_init	(GInitableIface *iface);
 static void	up_client_init			(UpClient	*client);
 static void	up_client_finalize		(GObject	*object);
 
-#define UP_CLIENT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_CLIENT, UpClientPrivate))
-
 /**
  * UpClientPrivate:
  *
@@ -73,6 +71,7 @@ enum {
 static guint signals [UP_CLIENT_LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_CODE (UpClient, up_client, G_TYPE_OBJECT,
+			 G_ADD_PRIVATE(UpClient)
                          G_IMPLEMENT_INTERFACE(G_TYPE_INITABLE, up_client_initable_iface_init))
 
 /**
@@ -451,8 +450,6 @@ up_client_class_init (UpClientClass *klass)
 			      G_STRUCT_OFFSET (UpClientClass, device_removed),
 			      NULL, NULL, g_cclosure_marshal_VOID__STRING,
 			      G_TYPE_NONE, 1, G_TYPE_STRING);
-
-	g_type_class_add_private (klass, sizeof (UpClientPrivate));
 }
 
 /*
@@ -463,7 +460,7 @@ static gboolean
 up_client_initable_init (GInitable *initable, GCancellable *cancellable, GError **error)
 {
 	UpClient *client = UP_CLIENT (initable);
-	client->priv = UP_CLIENT_GET_PRIVATE (client);
+	client->priv = up_client_get_instance_private (client);
 
 	/* connect to main interface */
 	client->priv->proxy = up_exported_daemon_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,

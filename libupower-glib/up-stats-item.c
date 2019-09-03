@@ -38,8 +38,6 @@ static void	up_stats_item_class_init	(UpStatsItemClass	*klass);
 static void	up_stats_item_init		(UpStatsItem		*stats_item);
 static void	up_stats_item_finalize		(GObject		*object);
 
-#define UP_STATS_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_STATS_ITEM, UpStatsItemPrivate))
-
 struct UpStatsItemPrivate
 {
 	gdouble			 value;
@@ -53,7 +51,7 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE (UpStatsItem, up_stats_item, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpStatsItem, up_stats_item, G_TYPE_OBJECT)
 
 /**
  * up_stats_item_set_value:
@@ -193,8 +191,6 @@ up_stats_item_class_init (UpStatsItemClass *klass)
 					 g_param_spec_double ("accuracy", NULL, NULL,
 							      0.0, G_MAXDOUBLE, 0.0,
 							      G_PARAM_READWRITE));
-
-	g_type_class_add_private (klass, sizeof (UpStatsItemPrivate));
 }
 
 /**
@@ -204,7 +200,7 @@ up_stats_item_class_init (UpStatsItemClass *klass)
 static void
 up_stats_item_init (UpStatsItem *stats_item)
 {
-	stats_item->priv = UP_STATS_ITEM_GET_PRIVATE (stats_item);
+	stats_item->priv = up_stats_item_get_instance_private (stats_item);
 }
 
 /**

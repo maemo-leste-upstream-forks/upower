@@ -54,8 +54,7 @@ struct UpInputPrivate
 	UpDaemon		*daemon;
 };
 
-G_DEFINE_TYPE (UpInput, up_input, G_TYPE_OBJECT)
-#define UP_INPUT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_INPUT, UpInputPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (UpInput, up_input, G_TYPE_OBJECT)
 
 /* we must use this kernel-compatible implementation */
 #define BITS_PER_LONG (sizeof(long) * 8)
@@ -267,7 +266,7 @@ out:
 static void
 up_input_init (UpInput *input)
 {
-	input->priv = UP_INPUT_GET_PRIVATE (input);
+	input->priv = up_input_get_instance_private (input);
 	input->priv->eventfp = -1;
 }
 
@@ -304,7 +303,6 @@ up_input_class_init (UpInputClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	object_class->finalize = up_input_finalize;
-	g_type_class_add_private (klass, sizeof (UpInputPrivate));
 }
 
 /**

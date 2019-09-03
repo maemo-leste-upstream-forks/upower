@@ -72,8 +72,7 @@ struct UpDeviceWupPrivate
 	int			 fd;
 };
 
-G_DEFINE_TYPE (UpDeviceWup, up_device_wup, UP_TYPE_DEVICE)
-#define UP_DEVICE_WUP_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_DEVICE_WUP, UpDeviceWupPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (UpDeviceWup, up_device_wup, UP_TYPE_DEVICE)
 
 static gboolean		 up_device_wup_refresh	 	(UpDevice *device);
 
@@ -420,7 +419,7 @@ out:
 static void
 up_device_wup_init (UpDeviceWup *wup)
 {
-	wup->priv = UP_DEVICE_WUP_GET_PRIVATE (wup);
+	wup->priv = up_device_wup_get_instance_private (wup);
 	wup->priv->fd = -1;
 	wup->priv->poll_timer_id = g_timeout_add_seconds (UP_DEVICE_WUP_REFRESH_TIMEOUT,
 							  (GSourceFunc) up_device_wup_poll_cb, wup);
@@ -461,8 +460,6 @@ up_device_wup_class_init (UpDeviceWupClass *klass)
 	object_class->finalize = up_device_wup_finalize;
 	device_class->coldplug = up_device_wup_coldplug;
 	device_class->refresh = up_device_wup_refresh;
-
-	g_type_class_add_private (klass, sizeof (UpDeviceWupPrivate));
 }
 
 /**

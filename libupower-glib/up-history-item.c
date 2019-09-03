@@ -39,8 +39,6 @@ static void	up_history_item_class_init	(UpHistoryItemClass	*klass);
 static void	up_history_item_init		(UpHistoryItem		*history_item);
 static void	up_history_item_finalize		(GObject		*object);
 
-#define UP_HISTORY_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_HISTORY_ITEM, UpHistoryItemPrivate))
-
 struct UpHistoryItemPrivate
 {
 	gdouble			 value;
@@ -56,7 +54,7 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE (UpHistoryItem, up_history_item, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (UpHistoryItem, up_history_item, G_TYPE_OBJECT)
 
 /**
  * up_history_item_set_value:
@@ -321,8 +319,6 @@ up_history_item_class_init (UpHistoryItemClass *klass)
 							    0, G_MAXUINT,
 							    UP_DEVICE_STATE_UNKNOWN,
 							    G_PARAM_READWRITE));
-
-	g_type_class_add_private (klass, sizeof (UpHistoryItemPrivate));
 }
 
 /**
@@ -331,7 +327,7 @@ up_history_item_class_init (UpHistoryItemClass *klass)
 static void
 up_history_item_init (UpHistoryItem *history_item)
 {
-	history_item->priv = UP_HISTORY_ITEM_GET_PRIVATE (history_item);
+	history_item->priv = up_history_item_get_instance_private (history_item);
 }
 
 /**

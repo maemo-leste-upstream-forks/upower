@@ -31,14 +31,13 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <errno.h>
 
 #include "up-kbd-backlight.h"
 #include "up-daemon.h"
 #include "up-types.h"
 
 static void     up_kbd_backlight_finalize   (GObject	*object);
-
-#define UP_KBD_BACKLIGHT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UP_TYPE_KBD_BACKLIGHT, UpKbdBacklightPrivate))
 
 struct UpKbdBacklightPrivate
 {
@@ -48,7 +47,7 @@ struct UpKbdBacklightPrivate
 	gint			 max_brightness;
 };
 
-G_DEFINE_TYPE (UpKbdBacklight, up_kbd_backlight, UP_TYPE_EXPORTED_KBD_BACKLIGHT_SKELETON)
+G_DEFINE_TYPE_WITH_PRIVATE (UpKbdBacklight, up_kbd_backlight, UP_TYPE_EXPORTED_KBD_BACKLIGHT_SKELETON)
 
 /**
  * up_kbd_backlight_emit_change:
@@ -207,8 +206,6 @@ up_kbd_backlight_class_init (UpKbdBacklightClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	object_class->finalize = up_kbd_backlight_finalize;
-
-	g_type_class_add_private (klass, sizeof (UpKbdBacklightPrivate));
 }
 
 /**
@@ -224,7 +221,11 @@ up_kbd_backlight_event_io (GIOChannel *channel, GIOCondition condition, gpointer
 		return FALSE;
 
 	brightness = up_kbd_backlight_brightness_read (kbd_backlight, kbd_backlight->priv->fd_hw_changed);
-	up_kbd_backlight_emit_change (kbd_backlight, brightness, "internal");
+	if (brightness < 0 && errno == ENODEV)
+		return FALSE;
+
+	if (brightness >= 0)
+		up_kbd_backlight_emit_change (kbd_backlight, brightness, "internal");
 
 	return TRUE;
 }
@@ -322,7 +323,7 @@ out:
 static void
 up_kbd_backlight_init (UpKbdBacklight *kbd_backlight)
 {
-	kbd_backlight->priv = UP_KBD_BACKLIGHT_GET_PRIVATE (kbd_backlight);
+	kbd_backlight->priv = up_kbd_backlight_get_instance_private (kbd_backlight);
 
 	g_signal_connect (kbd_backlight, "handle-get-brightness",
 			  G_CALLBACK (up_kbd_backlight_get_brightness), kbd_backlight);
@@ -344,7 +345,7 @@ up_kbd_backlight_finalize (GObject *object)
 	g_return_if_fail (UP_IS_KBD_BACKLIGHT (object));
 
 	kbd_backlight = UP_KBD_BACKLIGHT (object);
-	kbd_backlight->priv = UP_KBD_BACKLIGHT_GET_PRIVATE (kbd_backlight);
+	kbd_backlight->priv = up_kbd_backlight_get_instance_private (kbd_backlight);
 
 	if (kbd_backlight->priv->channel_hw_changed) {
 		g_io_channel_shutdown (kbd_backlight->priv->channel_hw_changed, FALSE, NULL);
