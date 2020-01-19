@@ -749,7 +749,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		energy_rate = up_device_supply_calculate_rate (supply, energy);
 
 	/* get a precise percentage */
-        if (sysfs_file_exists (native_path, "capacity")) {
+        if (sysfs_file_exists (native_path, "capacity") ||
+            sysfs_file_exists (native_path, "capacity_level"))
+        {
 		percentage = sysfs_get_double (native_path, "capacity");
 
 		/* If battery is not calibrated, estimate percentage using voltage  */
