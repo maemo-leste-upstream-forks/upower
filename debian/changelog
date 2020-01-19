@@ -1,3 +1,10 @@
+upower (1:0.99.7.6-1) unstable; urgency=medium
+
+  * Fix Droid4 voltage estimated percentage
+  * Improve voltage estimated percentage calculation
+
+ -- Arthur D. <spinal.by@gmail.com>  Sun, 19 Jan 2020 21:54:18 +0300
+
 upower (1:0.99.7.5-1) unstable; urgency=medium
 
   * Remove design voltage properties from battery devices
