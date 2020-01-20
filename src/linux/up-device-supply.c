@@ -767,6 +767,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 			{
 				gdouble voltage_empty = supply->priv->voltage_min_design;
 				gdouble voltage_full  = supply->priv->voltage_max_design;
+				gdouble voltage_delta = voltage_full - voltage_empty;
 				gdouble percentage_prev;
 				gdouble voltage_prev;
 				gdouble voltage_avg;
@@ -779,12 +780,11 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 				voltage_avg = (voltage_prev + voltage) / 2;
 
 				if (state == UP_DEVICE_STATE_CHARGING)
-					voltage_empty += 0.4;
+					voltage_empty += voltage_delta * 0.2;
 				else
-					voltage_empty += 0.1;
+					voltage_full  -= voltage_delta * 0.2;
 
 				percentage = (voltage_avg - voltage_empty) / (voltage_full - voltage_empty) * 100;
-				percentage = round (percentage);
 
 				if (percentage_prev != 0)
 				{
@@ -792,7 +792,11 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 						percentage = fmax (percentage_prev, percentage);
 					else
 						percentage = fmin (percentage_prev, percentage);
+
+					percentage = (percentage_prev + percentage) / 2;
 				}
+
+				percentage = round (percentage);
 			}
 		}
 
