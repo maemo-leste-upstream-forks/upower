@@ -1,3 +1,9 @@
+upower (1:0.99.11.1-1) unstable; urgency=medium
+
+  * Add Maemo Leste fixes and improvements
+
+ -- Merlijn Wajer <merlijn@wizzup.org>  Sun, 11 Dec 2022 16:05:11 +0100
+
 upower (0.99.11-2) unstable; urgency=medium
 
   [ Laurent Bigonville ]
