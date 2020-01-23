@@ -1,3 +1,9 @@
+upower (1:0.99.7.6-2) unstable; urgency=medium
+
+  * Remove debian tests because of jenkins issues
+
+ -- Arthur Demchenkov <spinal.by@gmail.com>  Thu, 23 Jan 2020 06:53:36 +0300
+
 upower (1:0.99.7.6-1) unstable; urgency=medium
 
   * Fix Droid4 voltage estimated percentage
