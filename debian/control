@@ -1,0 +1,103 @@
+Source: upower
+Section: admin
+Priority: optional
+Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+Uploaders: Michael Biebl <biebl@debian.org>,
+           Martin Pitt <mpitt@debian.org>,
+Build-Depends: debhelper (>= 10.3),
+               dh-exec,
+               gobject-introspection (>= 0.9.12-4~),
+               gtk-doc-tools,
+               intltool (>= 0.40.0),
+               libgirepository1.0-dev (>= 0.10.7-1~),
+               libglib2.0-dev (>= 2.36),
+               libglib2.0-doc,
+               libgudev-1.0-dev (>= 147) [linux-any],
+               libimobiledevice-dev (>= 0.9.7) [linux-any],
+               libkvm-dev [kfreebsd-any],
+               libusb-1.0-0-dev (>= 1.0.0) [linux-any],
+               pkg-config,
+               udev [linux-any],
+               xsltproc,
+Standards-Version: 4.3.0
+Vcs-Git: https://salsa.debian.org/utopia-team/upower.git
+Vcs-Browser: https://salsa.debian.org/utopia-team/upower/
+Homepage: https://upower.freedesktop.org/
+
+Package: upower
+Architecture: any
+Multi-Arch: foreign
+Pre-Depends: ${misc:Pre-Depends},
+Depends: dbus,
+         udev [linux-any],
+         ${misc:Depends},
+         ${shlibs:Depends},
+Recommends: policykit-1,
+Description: abstraction for power management
+ upower provides an interface to enumerate power sources on the system
+ and control system-wide power management. Any application can access the
+ org.freedesktop.UPower service on the system message bus. Some
+ operations (such as suspending the system) are restricted using PolicyKit.
+
+Package: upower-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+Suggests: devhelp,
+Description: abstraction for power management - documentation
+ upower provides an interface to enumerate power sources on the system
+ and control system-wide power management. Any application can access the
+ org.freedesktop.UPower service on the system message bus. Some
+ operations (such as suspending the system) are restricted using PolicyKit.
+
+Package: libupower-glib3
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends},
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Recommends: upower (>> 0.99),
+Description: abstraction for power management - shared library
+ upower provides an interface to enumerate power sources on the system
+ and control system-wide power management. Any application can access the
+ org.freedesktop.UPower service on the system message bus. Some
+ operations (such as suspending the system) are restricted using PolicyKit.
+ .
+ This package contains the shared library to be used by applications.
+
+Package: libupower-glib-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: gir1.2-upowerglib-1.0 (= ${binary:Version}),
+         libupower-glib3 (= ${binary:Version}),
+         libglib2.0-dev,
+         ${misc:Depends},
+         ${shlibs:Depends},
+Description: abstraction for power management - development files
+ upower provides an interface to enumerate power sources on the system
+ and control system-wide power management. Any application can access the
+ org.freedesktop.UPower service on the system message bus. Some
+ operations (such as suspending the system) are restricted using PolicyKit.
+ .
+ This package contains files that are needed to build applications.
+
+Package: gir1.2-upowerglib-1.0
+Section: introspection
+Architecture: any
+Multi-Arch: same
+Depends: ${gir:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends},
+Description: GObject introspection data for upower
+ upower provides an interface to enumerate power sources on the system
+ and control system-wide power management. Any application can access the
+ org.freedesktop.UPower service on the system message bus. Some
+ operations (such as suspending the system) are restricted using PolicyKit.
+ .
+ This package contains introspection data for upower.
+ .
+ It can be used by packages using the GIRepository format to generate
+ dynamic bindings.
