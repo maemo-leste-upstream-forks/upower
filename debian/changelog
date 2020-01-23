@@ -1,3 +1,9 @@
+upower (1:0.99.10.1-2) unstable; urgency=medium
+
+  * Remove systemd support
+
+ -- Arthur Demchenkov <spinal.by@gmail.com>  Thu, 23 Jan 2020 03:44:27 +0300
+
 upower (1:0.99.10.1-1) unstable; urgency=medium
 
   * Add Maemo Leste fixes and improvements
