@@ -1,3 +1,9 @@
+upower (1:0.99.7.7-1) unstable; urgency=medium
+
+  * Adjust voltage estimated percentage calculation
+
+ -- Arthur Demchenkov <spinal.by@gmail.com>  Fri, 14 Feb 2020 23:36:03 +0300
+
 upower (1:0.99.7.6-2) unstable; urgency=medium
 
   * Remove debian tests because of jenkins issues
