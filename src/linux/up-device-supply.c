@@ -783,8 +783,10 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 
 				if (state == UP_DEVICE_STATE_CHARGING)
 					voltage_empty += voltage_delta * 0.2;
-				else
-					voltage_full  -= voltage_delta * 0.2;
+				else {
+					voltage_full  -= voltage_delta * 0.1;
+					voltage_empty += voltage_delta * 0.1;
+				}
 
 				percentage = (voltage_avg - voltage_empty) / (voltage_full - voltage_empty) * 100;
 
