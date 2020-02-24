@@ -1,3 +1,15 @@
+upower (0.99.11-2) UNRELEASED; urgency=medium
+
+  * Bump debhelper version to 12, switch from dh_systemd_enable to
+    dh_installsystemd
+  * Move the daemon to /usr/libexec now that's allowed in the policy
+  * debian/libupower-glib3.symbols: Add Build-Depends-Package field
+  * debian/control: Bump Standards-Version to 4.5.0 (no further changes)
+  * debian/control: Move libglib2.0-doc to B-D-I and mark upower-doc with
+    Build-Profiles: <!nodoc>
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 24 Feb 2020 02:00:34 +0100
+
 upower (0.99.11-1) unstable; urgency=medium
 
   * New upstream version 0.99.11
