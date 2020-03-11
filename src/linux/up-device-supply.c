@@ -357,6 +357,13 @@ up_device_supply_get_design_voltage (UpDeviceSupply *device, const gchar *native
 	gdouble voltage;
 	gchar *device_type = NULL;
 
+	/* constant charge */
+	voltage = sysfs_get_double (native_path, "constant_charge_voltage") / 1000000.0;
+	if (voltage > 1.00f) {
+		g_debug ("using constant charge voltage");
+		goto out;
+	}
+
 	/* design maximum */
 	voltage = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
 	if (voltage > 1.00f) {
@@ -638,7 +645,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		charge_full_design = sysfs_get_double (native_path, "charge_full_design") / 1000000.0;
 		energy_full_design = sysfs_get_double (native_path, "energy_full_design") / 1000000.0;
 		supply->priv->voltage_min_design = sysfs_get_double (native_path, "voltage_min_design") / 1000000.0;
-		supply->priv->voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
+		supply->priv->voltage_max_design = sysfs_get_double (native_path, "constant_charge_voltage") / 1000000.0;
+		if (supply->priv->voltage_max_design < 1.00f)
+                    supply->priv->voltage_max_design = sysfs_get_double (native_path, "voltage_max_design") / 1000000.0;
 
 		if ((!supply->priv->voltage_min_design || !supply->priv->voltage_max_design) &&
 		    technology == UP_DEVICE_TECHNOLOGY_LITHIUM_ION && supply->priv->voltage_design < 4.25) {
