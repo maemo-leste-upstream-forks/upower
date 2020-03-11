@@ -1,3 +1,9 @@
+upower (1:0.99.7.8-1) unstable; urgency=medium
+
+  * Fix Droid4 full battery voltage value
+
+ -- Arthur Demchenkov <spinal.by@gmail.com>  Wed, 11 Mar 2020 09:51:41 +0300
+
 upower (1:0.99.7.7-1) unstable; urgency=medium
 
   * Adjust voltage estimated percentage calculation
