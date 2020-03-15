@@ -15,7 +15,8 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 		--enable-gtk-doc \
 		--enable-introspection \
-		--disable-systemd
+		--with-systemdutildir=/lib/systemd \
+		--with-systemdsystemunitdir=/lib/systemd/system \
 		--libexecdir=\$${prefix}/lib/upower
 
 override_dh_auto_build:
@@ -30,3 +31,6 @@ override_dh_install:
 
 override_dh_makeshlibs:
 	dh_makeshlibs -- -c4
+
+override_dh_systemd_enable:
+	dh_systemd_enable --no-enable
