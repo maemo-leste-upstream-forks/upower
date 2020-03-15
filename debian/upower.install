@@ -4,7 +4,7 @@ etc/dbus-1/system.d/
 lib/systemd/
 [linux-any] lib/udev/rules.d/
 usr/bin/upower
-usr/lib/*/upowerd
+usr/lib/upower/upowerd
 usr/share/dbus-1/
 usr/share/locale/
 usr/share/man/
