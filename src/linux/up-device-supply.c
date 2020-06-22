@@ -754,7 +754,7 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 		percentage = sysfs_get_double (native_path, "capacity");
 
 		/* If battery is not calibrated, estimate percentage using voltage  */
-		if (charge_full == 0 && percentage == 0 &&
+		if ((charge_full == 0 || charge == 0) && percentage == 0 &&
 		    supply->priv->voltage_min_design != 0 &&
 		    supply->priv->voltage_max_design != 0)
 		{
