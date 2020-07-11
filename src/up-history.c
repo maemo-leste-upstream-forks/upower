@@ -37,7 +37,7 @@ static void	up_history_finalize	(GObject		*object);
 
 #define UP_HISTORY_FILE_HEADER		"PackageKit Profile"
 #define UP_HISTORY_SAVE_INTERVAL	(10*60)		/* seconds */
-#define UP_HISTORY_DEFAULT_MAX_DATA_AGE	(7*24*60*60)	/* seconds */
+#define UP_HISTORY_DEFAULT_MAX_DATA_AGE	(4*7*24*60*60)	/* seconds */
 
 struct UpHistoryPrivate
 {
