@@ -1,3 +1,9 @@
+upower (1:0.99.10.3-1) unstable; urgency=medium
+
+  * Retain power history data for 28 days rather than 7
+
+ -- Merlijn Wajer <merlijn@wizzup.org>  Sat, 11 Jul 2020 18:19:30 +0200
+
 upower (1:0.99.10.2-1) unstable; urgency=medium
 
   * Fix edge case for droid4 where charge_full is set, but charge is ENODATA
