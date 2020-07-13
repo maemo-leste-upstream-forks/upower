@@ -706,7 +706,9 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	state = up_device_supply_get_state (native_path);
 
 	/* this is the new value in uW */
-	energy_rate = fabs (sysfs_get_double (native_path, "power_now") / 1000000.0);
+	energy_rate = fabs (sysfs_get_double (native_path, "power_avg") / 1000000.0);
+	if (energy_rate < 0.01)
+		energy_rate = fabs (sysfs_get_double (native_path, "power_now") / 1000000.0);
 	if (energy_rate < 0.01) {
 		/* convert charge to energy */
 		if (energy < 0.01) {
