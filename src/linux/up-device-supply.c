@@ -818,6 +818,11 @@ up_device_supply_refresh_battery (UpDeviceSupply *supply,
 	if (state == UP_DEVICE_STATE_PENDING_CHARGE && percentage == 100.0)
 		state = UP_DEVICE_STATE_FULLY_CHARGED;
 
+	/* Some batteries may not emit status = full even when charging is
+	 * completed. Report fully-charged state when percentage is 100% */
+	if (state == UP_DEVICE_STATE_CHARGING && percentage == 100.0)
+		state = UP_DEVICE_STATE_FULLY_CHARGED;
+
 	/* the battery isn't charging or discharging, it's just
 	 * sitting there half full doing nothing: try to guess a state */
 	if (state == UP_DEVICE_STATE_UNKNOWN && supply->priv->is_power_supply) {
