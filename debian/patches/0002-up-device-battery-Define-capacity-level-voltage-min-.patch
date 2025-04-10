@@ -1,0 +1,72 @@
+From 2f6f39415cb475b87dc6116ea107211176a154e8 Mon Sep 17 00:00:00 2001
+From: "Sicelo A. Mhlongo" <absicsz@gmail.com>
+Date: Sun, 30 Mar 2025 19:57:58 +0200
+Subject: [PATCH 2/4] up-device-battery: Define capacity-level,
+ voltage-min-design and voltage-max-design properties
+
+Extend the parent class of the battery to support reporting the design maximum
+and minimum voltage, as well as the kernel-derived capacity level.
+
+Related: #301
+
+Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
+---
+ src/up-device-battery.c | 6 ++++++
+ src/up-device-battery.h | 3 +++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/src/up-device-battery.c b/src/up-device-battery.c
+index ad5e19b..8c0b1b9 100644
+--- a/src/up-device-battery.c
++++ b/src/up-device-battery.c
+@@ -391,6 +391,7 @@ up_device_battery_report (UpDeviceBattery *self,
+ 		      "energy-rate", values->energy.rate,
+ 		      "time-to-empty", time_to_empty,
+ 		      "time-to-full", time_to_full,
++		      "capacity-level", values->capacity_level,
+ 		      /* XXX: Move "update-time" updates elsewhere? */
+ 		      "update-time", (guint64) g_get_real_time () / G_USEC_PER_SEC,
+ 		      NULL);
+@@ -536,6 +537,8 @@ up_device_battery_update_info (UpDeviceBattery *self, UpBatteryInfo *info)
+ 				      "charge-end-threshold", info->charge_control_end_threshold,
+ 				      "charge-threshold-enabled", charge_threshold_enabled,
+ 				      "charge-threshold-supported", info->charge_control_supported,
++				      "voltage-min-design", info->voltage_min_design,
++				      "voltage-max-design", info->voltage_max_design,
+ 			              NULL);
+ 
+ 			priv->present = TRUE;
+@@ -612,6 +615,9 @@ up_device_battery_update_info (UpDeviceBattery *self, UpBatteryInfo *info)
+ 			      "charge-end-threshold", 0,
+ 			      "charge-threshold-enabled", FALSE,
+ 			      "charge-threshold-supported", FALSE,
++			      "voltage-min-design", (gdouble) 0.0,
++			      "voltage-max-design", (gdouble) 0.0,
++			      "capacity-level", NULL,
+ 		              NULL);
+ 	}
+ }
+diff --git a/src/up-device-battery.h b/src/up-device-battery.h
+index e55fa89..e567fe7 100644
+--- a/src/up-device-battery.h
++++ b/src/up-device-battery.h
+@@ -64,6 +64,7 @@ typedef struct {
+ 	gdouble percentage;
+ 	gdouble voltage;
+ 	gdouble temperature;
++	gchar *capacity_level;
+ } UpBatteryValues;
+ 
+ typedef struct {
+@@ -89,6 +90,8 @@ typedef struct {
+ 	UpDeviceTechnology technology;
+ 	gdouble voltage_design;
+ 	gint charge_cycles;
++	gdouble voltage_max_design;
++	gdouble voltage_min_design;
+ 
+ 	/* battery charging threshold */
+ 	gboolean charge_control_enabled;
+-- 
+2.49.0
+

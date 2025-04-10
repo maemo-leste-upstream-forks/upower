@@ -1,0 +1,81 @@
+From 283a39046a70d856a2ffbe9667ca3bc7e8f7c9db Mon Sep 17 00:00:00 2001
+From: "Sicelo A. Mhlongo" <absicsz@gmail.com>
+Date: Sun, 30 Mar 2025 19:44:31 +0200
+Subject: [PATCH 1/4] dbus: Define CapacityLevel, VoltageMinDesign and
+ VoltageMaxDesign properties
+
+Some drivers provide capacity_level, voltage_min_design, and voltage_max_design
+properties on sysfs even for system supplies. Expose these properties over DBus
+for consumption by clients.
+
+Related: #301
+
+Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
+---
+ dbus/org.freedesktop.UPower.Device.xml | 50 ++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+
+diff --git a/dbus/org.freedesktop.UPower.Device.xml b/dbus/org.freedesktop.UPower.Device.xml
+index dbe7067..9b57ac4 100644
+--- a/dbus/org.freedesktop.UPower.Device.xml
++++ b/dbus/org.freedesktop.UPower.Device.xml
+@@ -893,6 +893,56 @@ method return sender=:1.386 -> dest=:1.477 reply_serial=2
+         </doc:description>
+       </doc:doc>
+     </property>
++
++    <property name="VoltageMinDesign" type="d" access="read">
++      <doc:doc>
++        <doc:description>
++          <doc:para>
++            The minimum design voltage of the battery, as reported by the kernel.
++          </doc:para>
++        </doc:description>
++      </doc:doc>
++    </property>
++
++    <property name="VoltageMaxDesign" type="d" access="read">
++      <doc:doc>
++        <doc:description>
++          <doc:para>
++            The maximum design voltage of the battery, as reported by the kernel.
++          </doc:para>
++        </doc:description>
++      </doc:doc>
++    </property>
++
++    <property name="CapacityLevel" type="s" access="read">
++      <doc:doc>
++        <doc:description>
++          <doc:para>
++            Coarse representation of battery capacity. The value is one of the following:
++          </doc:para>
++          <doc:list>
++            <doc:item>
++              <doc:term>Unknown</doc:term>
++            </doc:item>
++            <doc:item>
++              <doc:term>Critical</doc:term>
++            </doc:item>
++            <doc:item>
++              <doc:term>Low</doc:term>
++            </doc:item>
++            <doc:item>
++              <doc:term>Normal</doc:term>
++            </doc:item>
++            <doc:item>
++              <doc:term>High</doc:term>
++            </doc:item>
++            <doc:item>
++              <doc:term>Full</doc:term>
++            </doc:item>
++          </doc:list>
++        </doc:description>
++      </doc:doc>
++    </property>
+   </interface>
+ 
+ </node>
+-- 
+2.49.0
+

@@ -1,0 +1,5 @@
+usr/libexec/upower/integration-test.py
+usr/libexec/upower/output_checker.py
+usr/libexec/upower/tests/
+usr/share/installed-tests/upower/upower-integration.test
+

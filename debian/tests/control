@@ -1,0 +1,16 @@
+Tests: upstream-system
+Depends: @,
+         python3,
+         python3-gi,
+         python3-dbus,
+         python3-dbusmock,
+         python3-packaging,
+         gir1.2-glib-2.0,
+         gir1.2-umockdev-1.0,
+         umockdev
+
+Tests: build
+Depends: libupower-glib-dev,
+         build-essential,
+         upower
+Restrictions: isolation-container

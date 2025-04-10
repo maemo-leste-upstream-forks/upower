@@ -1,0 +1,6 @@
+upower (1.90.9-1) unstable; urgency=medium
+
+  * Package latest upstream release
+  * Add merged patches to export more sysfs values
+
+ -- Sicelo A. Mhlongo <absicsz@gmail.com>  Wed, 16 Apr 2025 16:51:19 +0200
