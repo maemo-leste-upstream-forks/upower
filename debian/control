@@ -18,6 +18,7 @@ Build-Depends: debhelper-compat (= 13),
                pkg-config,
                udev [linux-any],
                xsltproc,
+               polkitd,
 Build-Depends-Indep: libglib2.0-doc <!nodoc>,
 Standards-Version: 4.6.1
 Rules-Requires-Root: no
