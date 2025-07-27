@@ -82,6 +82,7 @@ Multi-Arch: same
 Depends: gir1.2-upowerglib-1.0 (= ${binary:Version}),
          libupower-glib3 (= ${binary:Version}),
          libglib2.0-dev,
+         libpolkit-gobject-1-dev,
          ${misc:Depends},
          ${shlibs:Depends},
 Description: abstraction for power management - development files
