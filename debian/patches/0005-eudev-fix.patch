@@ -1,0 +1,20 @@
+diff --git a/meson.build b/meson.build
+index f30b51c..e3ba1a7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -94,13 +94,13 @@ if os_backend == 'linux'
+ 
+   udevrulesdir = get_option('udevrulesdir')
+   if udevrulesdir == 'auto'
+-    udev_dep = dependency('udev', required: true)
++    udev_dep = dependency('eudev', required: true)
+     udevrulesdir = udev_dep.get_variable(pkgconfig: 'udev_dir') / 'rules.d'
+   endif
+ 
+   udevhwdbdir = get_option('udevhwdbdir')
+   if udevhwdbdir == 'auto'
+-    udev_dep = dependency('udev', required: true)
++    udev_dep = dependency('eudev', required: true)
+     udevhwdbdir = udev_dep.get_variable(pkgconfig: 'udev_dir') / 'hwdb.d'
+   endif
+ endif
