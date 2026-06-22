@@ -2,4 +2,3 @@
 0002-up-device-battery-Define-capacity-level-voltage-min-.patch
 0003-linux-up-device-supply-battery-read-values-of-capaci.patch
 0004-lib-up-device-Expose-CapacityLevel-VoltageMinDesign-.patch
-0005-meson.build-Downgrade-gudev-version-for-daedalus.patch
